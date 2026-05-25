@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Todas as Bolas da Copa do Mundo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;700;900&display=swap%22 rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #0b0b0b;
@@ -23,8 +23,7 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;overflow-x:hidden}
- 
-/* NAV */
+
 nav{
   position:fixed;top:0;width:100%;z-index:100;
   background:rgba(11,11,11,0.92);backdrop-filter:blur(24px);
@@ -37,8 +36,7 @@ nav{
 .nav-links a{font-family:'Space Mono';font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
 .nav-links a:hover{color:var(--gold)}
 @media(max-width:768px){.nav-links{display:none}}
- 
-/* HERO */
+
 .hero{
   min-height:100vh;display:flex;flex-direction:column;align-items:center;
   justify-content:center;text-align:center;padding:80px 2rem 5rem;
@@ -71,8 +69,7 @@ nav{
 .hero-stats{display:flex;gap:clamp(2rem,5vw,5rem);flex-wrap:wrap;justify-content:center}
 .stat-n{font-family:'Bebas Neue';font-size:clamp(2.5rem,5vw,4rem);color:var(--gold);line-height:1}
 .stat-l{font-family:'Space Mono';font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:4px}
- 
-/* TIMELINE BAR */
+
 .timeline-bar{
   padding:1.5rem clamp(1rem,5vw,4rem);
   background:var(--s1);border-bottom:1px solid var(--brd);
@@ -92,8 +89,7 @@ nav{
 .tl-node:hover .tl-dot{transform:scale(1.7)}
 .tl-yr{font-family:'Space Mono';font-size:9px;letter-spacing:.08em;color:var(--dim);white-space:nowrap}
 .tl-node:hover .tl-yr{color:var(--gold)}
- 
-/* FILTERS */
+
 .filters{
   position:sticky;top:60px;z-index:90;
   background:rgba(11,11,11,.96);backdrop-filter:blur(20px);
@@ -110,11 +106,9 @@ nav{
 }
 .fb:hover{border-color:var(--gold);color:var(--gold)}
 .fb.active{background:var(--gold);border-color:var(--gold);color:#0b0b0b;font-weight:700}
- 
-/* MAIN */
+
 .main{padding:3rem clamp(1rem,5vw,4rem);max-width:1600px;margin:0 auto}
- 
-/* ERA */
+
 .era{margin-bottom:5rem}
 .era-hd{
   display:flex;align-items:baseline;gap:1.5rem;margin-bottom:2rem;
@@ -128,15 +122,15 @@ nav{
 .era-sintetica .era-title{color:#50a8e0}
 .era-tecnologica .era-title{color:#48c8ff}
 .era-digital .era-title{color:#4dff9a}
- 
-/* GRID */
+
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
 @media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr);gap:.65rem}}
- 
-/* CARD */
+
+/* ── CARD — alinhamento corrigido ── */
 .card{
   background:var(--s1);border:1px solid var(--brd);border-radius:var(--r);
   overflow:hidden;cursor:pointer;
+  display:flex;flex-direction:column;          /* flex coluna no card inteiro */
   opacity:0;transform:translateY(16px);
   transition:opacity .5s ease,transform .5s ease,border-color .3s,box-shadow .3s;
 }
@@ -146,38 +140,161 @@ nav{
   border-color:rgba(232,184,48,.28);
   box-shadow:0 18px 50px rgba(0,0,0,.55),0 0 0 1px rgba(232,184,48,.08);
 }
+
 .card-vis{
-  position:relative;height:170px;display:flex;
-  align-items:center;justify-content:center;overflow:hidden;
+  position:relative;
+  height:170px;                                /* altura fixa e uniforme */
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
 }
-.card-vis svg, .card-vis img{
+.card-vis svg,.card-vis img{
   width:118px;height:118px;
-  object-fit: contain;
+  object-fit:contain;
   filter:drop-shadow(0 10px 28px rgba(0,0,0,.65));
   transition:transform .5s cubic-bezier(.34,1.56,.64,1),filter .3s;
+  display:block;                               /* evita espaço inline extra */
 }
-.card:hover .card-vis svg, .card:hover .card-vis img{transform:scale(1.14) rotate(14deg);filter:drop-shadow(0 18px 40px rgba(0,0,0,.75))}
+.card:hover .card-vis svg,.card:hover .card-vis img{
+  transform:scale(1.14) rotate(14deg);
+  filter:drop-shadow(0 18px 40px rgba(0,0,0,.75));
+}
 .card-glow{position:absolute;inset:0;opacity:0;transition:opacity .4s;pointer-events:none}
 .card:hover .card-glow{opacity:1}
-.card-info{padding:1.1rem;border-top:1px solid var(--brd)}
-.yr-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem}
-.yr{font-family:'Space Mono';font-size:11px;letter-spacing:.08em;color:var(--muted)}
-.host{font-family:'Space Mono';font-size:9px;color:var(--dim);text-align:right;max-width:120px;line-height:1.4}
+
+.card-info{
+  padding:1.1rem;
+  border-top:1px solid var(--brd);
+  display:flex;                                /* flex coluna na área de info */
+  flex-direction:column;
+  flex:1;                                      /* ocupa o restante do card */
+}
+
+.yr-row{
+  display:flex;justify-content:space-between;
+  align-items:flex-start;                      /* alinha topo quando host quebra linha */
+  gap:6px;
+  margin-bottom:.5rem;
+}
+.yr{
+  font-family:'Space Mono';font-size:11px;letter-spacing:.08em;
+  color:var(--muted);white-space:nowrap;flex-shrink:0;
+}
+.host{
+  font-family:'Space Mono';font-size:9px;color:var(--dim);
+  text-align:right;line-height:1.4;
+  max-width:120px;
+}
+
 .cname{
-  font-family:'Bebas Neue';font-size:1.35rem;letter-spacing:.04em;line-height:1.05;
-  margin-bottom:.45rem;color:var(--text);transition:color .2s;
+  font-family:'Bebas Neue';font-size:1.35rem;letter-spacing:.04em;
+  line-height:1.1;
+  margin-bottom:.4rem;
+  color:var(--text);transition:color .2s;
+  min-height:2.9rem;                           /* reserva espaço p/ 2 linhas */
+  display:flex;align-items:flex-end;           /* nome alinha na base da caixa */
 }
 .card:hover .cname{color:var(--gold)}
+
 .badge{
-  display:inline-flex;align-items:center;gap:4px;
+  display:inline-flex;align-items:center;gap:4px;align-self:flex-start;
   font-family:'Space Mono';font-size:9px;letter-spacing:.08em;text-transform:uppercase;
-  padding:2px 8px;border-radius:4px;margin-bottom:.65rem;
+  padding:2px 8px;border-radius:4px;
+  margin-bottom:.65rem;flex-shrink:0;
 }
 .b-pre{background:rgba(192,120,64,.1);color:#c07840;border:1px solid rgba(192,120,64,.18)}
 .b-adi{background:rgba(232,184,48,.08);color:var(--gold);border:1px solid rgba(232,184,48,.14)}
-.fact{font-size:12px;color:var(--muted);line-height:1.58}
- 
-/* FOOTER */
+
+.fact{
+  font-size:12px;color:var(--muted);line-height:1.58;
+  margin-top:auto;                             /* empurra fact para o fundo */
+}
+
+/* ── MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,.82);backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;
+  padding:1rem;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s;
+}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{
+  background:#141414;border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;width:100%;max-width:780px;max-height:90vh;
+  overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(232,184,48,.3) transparent;
+  transform:translateY(28px) scale(.97);
+  transition:transform .35s cubic-bezier(.34,1.2,.64,1);
+  position:relative;
+}
+.modal-overlay.open .modal{transform:translateY(0) scale(1)}
+.modal::-webkit-scrollbar{width:4px}
+.modal::-webkit-scrollbar-thumb{background:rgba(232,184,48,.3);border-radius:4px}
+
+.modal-close{
+  position:sticky;top:0;float:right;margin:1rem 1rem 0 0;
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  color:var(--muted);font-size:18px;cursor:pointer;z-index:10;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,color .2s,transform .2s;
+  flex-shrink:0;
+}
+.modal-close:hover{background:rgba(255,255,255,.12);color:var(--text);transform:rotate(90deg)}
+
+.modal-hero{
+  display:flex;align-items:center;gap:2rem;
+  padding:2rem 2rem 1.5rem;
+  clear:both;
+}
+@media(max-width:600px){.modal-hero{flex-direction:column;text-align:center}}
+
+.modal-ball{
+  width:160px;height:160px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.modal-ball svg,.modal-ball img{
+  width:150px;height:150px;object-fit:contain;
+  filter:drop-shadow(0 16px 40px rgba(0,0,0,.7));
+  animation:modalSpin 18s linear infinite;
+}
+@keyframes modalSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+.modal-header{}
+.modal-yr{font-family:'Space Mono';font-size:12px;letter-spacing:.12em;color:var(--muted);margin-bottom:.4rem}
+.modal-name{font-family:'Bebas Neue';font-size:clamp(2.2rem,6vw,3.6rem);letter-spacing:.04em;line-height:1;margin-bottom:.5rem}
+.modal-host{font-family:'Space Mono';font-size:11px;color:var(--dim)}
+
+.modal-body{padding:0 2rem 2rem}
+
+.modal-section{margin-bottom:1.8rem}
+.modal-section-title{
+  font-family:'Space Mono';font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:.9rem;
+  padding-bottom:.5rem;border-bottom:1px solid var(--brd);
+}
+.modal-history{font-size:14px;color:var(--muted);line-height:1.72}
+
+.specs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.65rem}
+.spec-item{
+  background:#1a1a1a;border:1px solid rgba(255,255,255,.06);
+  border-radius:10px;padding:.85rem 1rem;
+}
+.spec-label{font-family:'Space Mono';font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:.3rem}
+.spec-val{font-family:'Bebas Neue';font-size:1.3rem;letter-spacing:.04em;color:var(--text)}
+.spec-unit{font-family:'Space Mono';font-size:9px;color:var(--muted);margin-top:1px}
+
+.modal-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.modal-tag{
+  font-family:'Space Mono';font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 10px;border-radius:6px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:var(--muted);
+}
+.modal-tag.gold{background:rgba(232,184,48,.08);border-color:rgba(232,184,48,.18);color:var(--gold)}
+
+.modal-divider{height:1px;background:var(--brd);margin:.4rem 0 1.2rem}
+
 footer{
   border-top:1px solid var(--brd);padding:2.5rem clamp(1rem,5vw,4rem);
   display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
@@ -187,9 +304,9 @@ footer{
 </style>
 </head>
 <body>
- 
+
 <nav>
-<a class="nav-logo" href="#"></a>
+<a class="nav-logo" href="#">⚽ BOLAS DA COPA</a>
 <ul class="nav-links">
 <li><a href="#era-classica">Clássica</a></li>
 <li><a href="#era-revolucao">Revolução</a></li>
@@ -198,7 +315,7 @@ footer{
 <li><a href="#era-digital">Digital</a></li>
 </ul>
 </nav>
- 
+
 <section class="hero">
 <div class="hero-bg"></div>
 <div class="hero-dot">Arquivo Histórico Completo</div>
@@ -210,11 +327,11 @@ footer{
 <div><div class="stat-n">96</div><div class="stat-l">Anos de História</div></div>
 </div>
 </section>
- 
+
 <div class="timeline-bar">
 <div class="tl-inner" id="tl"></div>
 </div>
- 
+
 <div class="filters">
 <div class="filters-inner">
 <button class="fb active" data-f="all">Todas (25)</button>
@@ -225,68 +342,197 @@ footer{
 <button class="fb" data-f="digital">Era Digital · 18–26 (3)</button>
 </div>
 </div>
- 
+
 <main class="main" id="catalog"></main>
- 
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+<div class="modal" id="modal">
+  <button class="modal-close" id="modalClose" aria-label="Fechar">✕</button>
+  <div class="modal-hero">
+    <div class="modal-ball" id="modalBall"></div>
+    <div class="modal-header">
+      <div class="modal-yr" id="modalYr"></div>
+      <div class="modal-name" id="modalTitle"></div>
+      <div class="modal-host" id="modalHost"></div>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="modal-section">
+      <div class="modal-section-title">História</div>
+      <p class="modal-history" id="modalHistory"></p>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Especificações Técnicas</div>
+      <div class="specs-grid" id="modalSpecs"></div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Características</div>
+      <div class="modal-tags" id="modalTags"></div>
+    </div>
+  </div>
+</div>
+</div>
+
 <footer>
-<div class="f-logo"></div>
-<div class="f-copy"></div>
+<div class="f-logo">⚽</div>
+<div class="f-copy">Arquivo histórico · Copas do Mundo FIFA 1930–2026</div>
 </footer>
- 
+
 <script>
 const ERAS = [
   {
     id:'classica', title:'Era Clássica', range:'1930 — 1966',
     balls:[
-      {name:'Modelo T',yr:'—',host:'Protótipo',svg:'leather',c:['#8b4a1a','#5a2a08','#c07030'],fact:'Padrão original de couro costurado artesanalmente. Definiu o design das bolas por décadas'},
-      {name:'Tiento',yr:'1930',host:'Uruguai',svg:'leather',c:['#7a3810','#4a2008','#b06020'],fact:'Bola argentina usada no 1º tempo da final histórica. Uruguai vence o 1º Mundial da FIFA'},
-      {name:'Federale 102',yr:'1934',host:'Itália',svg:'leather13',c:['#9a6820','#6a3810','#c08030'],fact:'13 tiras de couro costuradas à mão. Itália bicampeã em casa sob o regime de Mussolini'},
-      {name:'Allen',yr:'1938',host:'França',svg:'leather',c:['#704018','#3a1808','#a05828'],fact:'Câmara de borracha interna aprimorada. Última Copa antes da 2ª Grande Guerra Mundial'},
-      {name:'Superball Duplo T',yr:'1950',host:'Brasil',svg:'leatherDT',c:['#8a5020','#522a0a','#b87030'],fact:'Painel em duplo T. O Maracanazo: Uruguai 2×1 Brasil. A bola chegava a +500g molhada'},
-      {name:'Swiss World Champion',yr:'1954',host:'Suíça',svg:'leather',c:['#a07848','#6a4820','#c89858'],fact:'"Milagre de Berna": Alemanha surpreende a Hungria invicta. Design suíço preciso e robusto'},
-      {name:'Top Star',yr:'1958',host:'Suécia',svg:'leatherStar',c:['#905820','#5a3010','#c07830'],fact:'Copa da estreia lendária de Pelé aos 17 anos. Brasil bicampeão com placar épico de 5×2'},
-      {name:'Crack',yr:'1962',host:'Chile',svg:'leather',c:['#7a4010','#4a2008','#a06020'],fact:'Couro macio e refinado. Garrincha domina o torneio. Brasil se consagra tricampeão mundial'},
-      {name:'Slazenger Challenge 4-Star',yr:'1966',host:'Inglaterra',svg:'slazenger',c:['#d85820','#a03010','#f07040'],fact:'Laranja para os gramados ingleses. Eusébio marca 9 gols. Controvérsia do gol de Hurst na final'},
+      {name:'Modelo T',yr:'—',host:'Protótipo',svg:'leather',c:['#8b4a1a','#5a2a08','#c07030'],
+       fact:'Padrão original de couro costurado artesanalmente. Definiu o design das bolas por décadas',
+       history:'O Modelo T representa o padrão original estabelecido para as bolas de futebol nos primórdios do esporte organizado. Confeccionado em couro bovino curtido manualmente, com câmara de bexiga animal em seu interior, este design definiu a estética e o comportamento das bolas por mais de três décadas. Cada peça era única, produzida por artesãos especializados que costuravam os painéis com linha de cânhamo encerada.',
+       specs:{peso:'396–453g',circunferencia:'68–70cm',paineis:'12–18',material:'Couro bovino',camara:'Bexiga animal',costura:'Manual'},
+       tags:['Artesanal','Couro natural','Câmara de bexiga','Pré-FIFA','Design pioneiro']},
+      {name:'Tiento',yr:'1930',host:'Uruguai',svg:'leather',c:['#7a3810','#4a2008','#b06020'],
+       fact:'Bola argentina usada no 1º tempo da final histórica. Uruguai vence o 1º Mundial da FIFA',
+       history:'A Tiento foi a bola escolhida pela Argentina para o primeiro tempo da final histórica de 1930. Confeccionada em Buenos Aires com couro bovino de alta qualidade, esta bola representou a orgulhosa tradição do futebol argentino. No segundo tempo, o Uruguai optou por sua própria bola. Com a Tiento no primeiro tempo, a Argentina vencia por 2×1; com a bola uruguaia, o Uruguai virou e sagrou-se campeão do primeiro Mundial da FIFA por 4×2, numa das maiores reviravoltas da história.',
+       specs:{peso:'396–453g',circunferencia:'68–70cm',paineis:'13',material:'Couro bovino curtido',camara:'Câmara de borracha',costura:'Manual em linha cânhamo',origem:'Argentina'},
+       tags:['1ª Copa do Mundo','Final histórica','Made in Argentina','Couro artesanal','Bola do 1º tempo']},
+      {name:'Federale 102',yr:'1934',host:'Itália',svg:'leather13',c:['#9a6820','#6a3810','#c08030'],
+       fact:'13 tiras de couro costuradas à mão. Itália bicampeã em casa sob o regime de Mussolini',
+       history:'A Federale 102 foi produzida na Itália especialmente para a Copa de 1934. Seu nome deriva do sistema de 13 tiras de couro cuidadosamente costuradas à mão, criando uma superfície mais uniforme que as bolas anteriores. Jogar em casa sob enorme pressão política do governo fascista de Mussolini, que queria uma vitória italiana a qualquer custo, a Squadra Azzurra conquistou o bicampeonato. A bola resistiu bem nas condições variadas dos campos italianos.',
+       specs:{peso:'396–453g',circunferencia:'68–70cm',paineis:'13 tiras longitudinais',material:'Couro bovino italiano',camara:'Câmara de borracha vulcanizada',costura:'Manual dupla'},
+       tags:['13 painéis','Design longitudinal','Made in Italy','Copa polêmica','Mussolini era']},
+      {name:'Allen',yr:'1938',host:'França',svg:'leather',c:['#704018','#3a1808','#a05828'],
+       fact:'Câmara de borracha interna aprimorada. Última Copa antes da 2ª Grande Guerra Mundial',
+       history:'A bola Allen marcou um avanço técnico significativo: sua câmara interna de borracha vulcanizada melhorada proporcionava uma retenção de ar muito superior às versões anteriores. Produzida pela empresa inglesa Allen, foi a última bola de uma Copa do Mundo antes de um silêncio de 12 anos imposto pela Segunda Guerra Mundial. Os jogos na França de 1938 seriam os últimos grandes do futebol europeu por uma geração inteira.',
+       specs:{peso:'396–453g',circunferencia:'68–71cm',paineis:'18',material:'Couro bovino inglês',camara:'Borracha vulcanizada aprimorada',costura:'Manual reforçada'},
+       tags:['Câmara aprimorada','Última pré-guerra','Made in England','1938 France','Borracha vulcanizada']},
+      {name:'Superball Duplo T',yr:'1950',host:'Brasil',svg:'leatherDT',c:['#8a5020','#522a0a','#b87030'],
+       fact:'Painel em duplo T. O Maracanazo: Uruguai 2×1 Brasil. A bola chegava a +500g molhada',
+       history:'A Superball com painel em Duplo T foi a bola do Maracanã, o maior estádio já construído para um evento esportivo. Com capacidade para mais de 200 mil pessoas, o gigante foi palco do choque: o Brasil precisava apenas de um empate contra o Uruguai para ser campeão, mas perdeu por 2×1. A bola, quando encharcada pela chuva do Rio de Janeiro, poderia superar os 500 gramas, tornando-a pesada e imprevisível. O Maracanazo ficou como a maior tragédia do futebol brasileiro.',
+       specs:{peso:'396–453g (até 500g+ molhada)',circunferencia:'68–71cm',paineis:'Duplo T',material:'Couro bovino curtido',camara:'Borracha natural',costura:'Manual reforçada'},
+       tags:['Maracanazo','Painel Duplo T','Copa no Brasil','Tragédia uruguaia','Couro que absorve água']},
+      {name:'Swiss World Champion',yr:'1954',host:'Suíça',svg:'leather',c:['#a07848','#6a4820','#c89858'],
+       fact:'"Milagre de Berna": Alemanha surpreende a Hungria invicta. Design suíço preciso e robusto',
+       history:'A Swiss World Champion foi produzida com a precisão característica da relojoaria e engenharia helvéticas. A bola foi protagonista do chamado "Milagre de Berna": a Hungria de Ferenc Puskás, considerada a melhor seleção do mundo e invicta há 4 anos, era imbatível nas fases anteriores — mas a Alemanha Ocidental a surpreendeu por 3×2 na final sob chuva intensa em Berna, na Suíça. A bola resistiu impecavelmente às condições adversas.',
+       specs:{peso:'396–453g',circunferencia:'68–70cm',paineis:'18',material:'Couro suíço de alta qualidade',camara:'Borracha suíça premium',costura:'Dupla costura cruzada'},
+       tags:['Milagre de Berna','Precisão suíça','Hungria invicta','Final na chuva','1954 Switzerland']},
+      {name:'Top Star',yr:'1958',host:'Suécia',svg:'leatherStar',c:['#905820','#5a3010','#c07830'],
+       fact:'Copa da estreia lendária de Pelé aos 17 anos. Brasil bicampeão com placar épico de 5×2',
+       history:'A Top Star foi a bola da estreia de uma lenda: Pelé, com apenas 17 anos, tornou-se o jogador mais jovem a marcar numa final de Copa do Mundo. O Brasil destruiu a Suécia por 5×2 na final realizada em Estocolmo, conquistando seu primeiro bicampeonato. Pelé marcou dois gols memoráveis naquela tarde, incluindo um de peito e uma bicicleta que ficaram na história. O mundo havia presenciado o nascimento do maior jogador de todos os tempos.',
+       specs:{peso:'396–453g',circunferencia:'68–71cm',paineis:'18 com reforço estrela',material:'Couro bovino sueco',camara:'Câmara de borracha sintética',costura:'Manual com linha dupla'},
+       tags:['Estreia de Pelé','17 anos','Brasil bicampeão','5×2 na final','Estocolmo 1958']},
+      {name:'Crack',yr:'1962',host:'Chile',svg:'leather',c:['#7a4010','#4a2008','#a06020'],
+       fact:'Couro macio e refinado. Garrincha domina o torneio. Brasil se consagra tricampeão mundial',
+       history:'A bola Crack do Chile de 1962 foi produzida com couro de alta maciez, elogiada pelos jogadores pela excelente resposta ao toque. O torneio ficou marcado pela genialidade de Garrincha, que assumiu o comando da seleção após Pelé se machucar na segunda partida. Com suas dribbles irrepetíveis e precisão desconcertante, Garrincha conduziu o Brasil ao tricampeonato. A Copa do Chile foi também famosa pela violenta "Batalha de Santiago" entre Chile e Itália.',
+       specs:{peso:'396–453g',circunferencia:'68–70cm',paineis:'18',material:'Couro bovino chileno curtido',camara:'Borracha natural aprimorada',costura:'Costura manual rebaixada'},
+       tags:['Garrincha genial','Brasil tricampeão','Batalha de Santiago','Pelé machucado','Chile 1962']},
+      {name:'Slazenger Challenge 4-Star',yr:'1966',host:'Inglaterra',svg:'slazenger',c:['#d85820','#a03010','#f07040'],
+       fact:'Laranja para os gramados ingleses. Eusébio marca 9 gols. Controvérsia do gol de Hurst na final',
+       history:'A Slazenger Challenge 4-Star foi revolucionária por sua cor laranja brilhante, projetada para maior visibilidade nos gramados britânicos frequentemente encobertos. Eusébio, a Pantera Negra de Moçambique, foi o artilheiro com 9 gols e encantou o mundo. A final entre Inglaterra e Alemanha Ocidental ficou para sempre marcada pelo gol fantasma de Geoff Hurst: a bola bateu na trave, no chão, e voltou — o árbitro marcou gol, mas a tecnologia da época não conseguia confirmar. A Inglaterra venceu por 4×2.',
+       specs:{peso:'396–453g',circunferencia:'68–70cm',paineis:'18',material:'Couro curtido inglês',camara:'Borracha natural',costura:'Manual reforçada',cor:'Laranja oficial'},
+       tags:['Primeira laranja','Slazenger','Gol fantasma de Hurst','Eusébio 9 gols','Wembley 1966']},
     ]
   },
   {
     id:'revolucao', title:'A Revolução Adidas', range:'1970 — 1982',
     balls:[
-      {name:'Adidas Telstar',yr:'1970',host:'México',svg:'telstar',c:['#f0f0f0','#1a1a1a','#ffffff'],fact:'O ícone absoluto. 32 painéis preto e branco projetados para aparecer na TV colorida. Pelé bicampeão'},
-      {name:'Adidas Chile Durlast',yr:'1974',host:'Alemanha Ocid.',svg:'chilelast',c:['#e8e0d4','#a08840','#ffffff'],fact:'1ª Copa 100% Adidas com borracha Durlast. Cruyff e o Futebol Total holandês mudam o jogo'},
-      {name:'Adidas Telstar Durlast',yr:'1978',host:'Argentina',svg:'telstarDurlast',c:['#f0f0f0','#1a1a1a','#e0e0e0'],fact:'Argentina campeã em casa entre serpentinas douradas. Mario Kempes: herói absoluto do torneio'},
-      {name:'Adidas Tango Durlast',yr:'1982',host:'Espanha',svg:'tango',c:['#f5f0e8','#1a1a1a','#c0b898'],fact:'20 triângulos curvos no icônico padrão Tango. Brasil de Zico eliminado pelos italianos de Paolo Rossi'},
-      {name:'Adidas Tango España',yr:'1982',host:'Espanha',svg:'tangoespanha',c:['#f0e070','#c03010','#d4a020'],fact:'Versão espanhola especial com acabamento dourado. Itália tricampeã. Rossi artilheiro com 6 gols'},
+      {name:'Adidas Telstar',yr:'1970',host:'México',svg:'telstar',c:['#f0f0f0','#1a1a1a','#ffffff'],
+       fact:'O ícone absoluto. 32 painéis preto e branco projetados para aparecer na TV colorida. Pelé bicampeão',
+       history:'A Adidas Telstar é a bola mais icônica da história do futebol. Seus 32 painéis — 20 hexágonos brancos e 12 pentágonos pretos — foram deliberadamente desenhados para criar contraste máximo nas transmissões de televisão colorida, que chegavam ao grande público pela primeira vez. O nome "Telstar" é uma homenagem ao satélite de comunicações da época. Pelé conquistou seu terceiro e último título mundial, e a bola tornou-se o símbolo universal do futebol ao redor do mundo.',
+       specs:{peso:'396–453g',circunferencia:'68–70cm',paineis:'32 (20 hex + 12 pent)',material:'Couro bovino costurado',camara:'Câmara de borracha sintética',costura:'Manual'},
+       tags:['Ícone absoluto','32 painéis','TV em cores','Pelé tricampeão','Design eterno','Telstar satélite']},
+      {name:'Adidas Chile Durlast',yr:'1974',host:'Alemanha Ocid.',svg:'chilelast',c:['#e8e0d4','#a08840','#ffffff'],
+       fact:'1ª Copa 100% Adidas com borracha Durlast. Cruyff e o Futebol Total holandês mudam o jogo',
+       history:'A Chile Durlast foi a primeira bola a usar o revestimento exclusivo Durlast da Adidas, que aumentava dramaticamente a durabilidade e resistência ao desgaste. Foi também a primeira Copa do Mundo inteiramente patrocinada pela Adidas. A Holanda de Johan Cruyff apresentou ao mundo o revolucionário "Futebol Total" — um sistema onde todos os jogadores atacavam e defendiam —, mas sucumbiu à pragmática Alemanha Ocidental de Beckenbauer e Müller na final.',
+       specs:{peso:'396–453g',circunferencia:'68–70cm',paineis:'32',material:'Couro com revestimento Durlast',camara:'Borracha sintética',costura:'Manual Adidas',novidade:'Durlast coating'},
+       tags:['Primeiro Durlast','100% Adidas','Futebol Total','Cruyff','Beckenbauer','1974 Alemanha']},
+      {name:'Adidas Telstar Durlast',yr:'1978',host:'Argentina',svg:'telstarDurlast',c:['#f0f0f0','#1a1a1a','#e0e0e0'],
+       fact:'Argentina campeã em casa entre serpentinas douradas. Mario Kempes: herói absoluto do torneio',
+       history:'A Telstar Durlast chegou à Argentina num contexto político tenso: a Copa de 1978 foi realizada durante a ditadura militar argentina. No campo, porém, a festa foi indescritível. Mario Kempes, artilheiro com 6 gols, foi o herói do país anfitrião. As serpentinas douradas e o papel picado que cobriram Monumental de Nuñez na final contra a Holanda viraram símbolo eterno. A Argentina venceu por 3×1 na prorrogação, conquistando seu primeiro título mundial.',
+       specs:{peso:'396–453g',circunferencia:'68–70cm',paineis:'32',material:'Couro Durlast premium',camara:'Borracha sintética vulcanizada',costura:'Manual Adidas'},
+       tags:['Argentina campeã','Kempes artilheiro','Serpentinas douradas','Copa da ditadura','Telstar evolution']},
+      {name:'Adidas Tango Durlast',yr:'1982',host:'Espanha',svg:'tango',c:['#f5f0e8','#1a1a1a','#c0b898'],
+       fact:'20 triângulos curvos no icônico padrão Tango. Brasil de Zico eliminado pelos italianos de Paolo Rossi',
+       history:'A Adidas Tango introduziu um dos designs mais reconhecidos da história do esporte: 20 círculos, cada um contendo três elipses que criam a ilusão de 20 triângulos curvos. O padrão Tango tornou-se tão popular que foi usado em múltiplas Copas. Em campo, a Copa de 1982 foi das mais emocionantes: o Brasil de Zico, Sócrates e Falcão, considerado o melhor time do torneio, foi eliminado por um Paolo Rossi em forma avassaladora. A Itália de Bearzot sagrou-se tricampeã.',
+       specs:{peso:'396–453g',circunferencia:'68–70cm',paineis:'20 triângulos curvos',material:'Couro Durlast',camara:'Borracha sintética',costura:'Manual Adidas',design:'Padrão Tango original'},
+       tags:['Padrão Tango','20 triângulos','Design icônico','Paolo Rossi','Brasil eliminado','Itália tricampeã']},
+      {name:'Adidas Tango España',yr:'1982',host:'Espanha',svg:'tangoespanha',c:['#f0e070','#c03010','#d4a020'],
+       fact:'Versão espanhola especial com acabamento dourado. Itália tricampeã. Rossi artilheiro com 6 gols',
+       history:'A Tango España foi uma versão especial criada para celebrar a Copa realizada na Espanha, com acabamento dourado que homenageava as cores da bandeira espanhola. Foi utilizada em jogos específicos como variante da Tango Durlast padrão. A Copa de 1982 ficou marcada como uma das mais memoráveis: 24 seleções pela primeira vez, jogos de alta tensão e o genial Paolo Rossi ressurgindo de uma suspensão por escândalo de apostas para se tornar artilheiro e ser eleito o melhor jogador do torneio.',
+       specs:{peso:'396–453g',circunferencia:'68–70cm',paineis:'20',material:'Couro Durlast com acabamento especial',camara:'Borracha sintética',costura:'Manual Adidas',versao:'Edição España'},
+       tags:['Edição especial','Acabamento dourado','España 1982','Versão comemorativa','Tango evolution']},
     ]
   },
   {
     id:'sintetica', title:'Era Sintética', range:'1986 — 1998',
     balls:[
-      {name:'Adidas Azteca',yr:'1986',host:'México',svg:'azteca',c:['#e06030','#c04010','#f08050'],fact:'1ª bola 100% sintética de uma Copa. Maradona imortalizou a Mão de Deus E o Gol do Século no mesmo jogo'},
-      {name:'Adidas Etrusco Unico',yr:'1990',host:'Itália',svg:'etrusco',c:['#f0e8d0','#c09020','#1a1a1a'],fact:'Arte etrusca italiana em relevo nos painéis. Copa mais defensiva da história. Alemanha Reunificada campeã'},
-      {name:'Adidas Questra',yr:'1994',host:'EUA',svg:'questra',c:['#f0f0f0','#c03020','#1050a0'],fact:'Superfície polyester espumosa revolucionária. Brasil pentacampeão. Roberto Baggio errou o pênalti decisivo'},
-      {name:'Adidas Tricolore',yr:'1998',host:'França',svg:'tricolore',c:['#0044aa','#dd0020','#f0f0f0'],fact:'1ª Copa com bola em cores — não apenas branca. França campeã em casa. Ronaldo e o enigma da final'},
+      {name:'Adidas Azteca',yr:'1986',host:'México',svg:'azteca',c:['#e06030','#c04010','#f08050'],
+       fact:'1ª bola 100% sintética de uma Copa. Maradona imortalizou a Mão de Deus E o Gol do Século no mesmo jogo',
+       history:'A Adidas Azteca foi uma revolução tecnológica: a primeira bola 100% sintética usada numa Copa do Mundo. Feita de poliuretano ao invés de couro, era impermeável, mais durável e comportava-se de maneira muito mais consistente em diferentes condições climáticas. O México voltou a sediar a Copa após o terremoto de 1985. Maradona, no mesmo jogo contra a Inglaterra, marcou o gol que chamou de "a Mão de Deus" e, em seguida, o escolhido como o Gol do Século. A Argentina foi campeã.',
+       specs:{peso:'396–453g',circunferencia:'68–70cm',paineis:'32',material:'Poliuretano sintético',camara:'Borracha butílica',costura:'Costurada sintética',inovacao:'1ª bola 100% sintética'},
+       tags:['1ª bola sintética','Poliuretano','Impermeável','Mão de Deus','Gol do Século','Maradona','Argentina campeã']},
+      {name:'Adidas Etrusco Unico',yr:'1990',host:'Itália',svg:'etrusco',c:['#f0e8d0','#c09020','#1a1a1a'],
+       fact:'Arte etrusca italiana em relevo nos painéis. Copa mais defensiva da história. Alemanha Reunificada campeã',
+       history:'A Etrusco Unico foi uma obra de arte tanto estética quanto técnica. Seus painéis apresentavam em relevo a cabeça de leão da arte etrusca — civilização pré-romana da Itália central — celebrando o patrimônio cultural do país anfitrião. Tecnicamente, foi a primeira bola a usar espuma de poliuretano de última camada para melhorar o conforto e precisão no chute. A Copa de 1990 ficou conhecida como a mais defensiva: apenas 2,21 gols por jogo. Alemanha Reunificada venceu a Argentina por 1×0 na final.',
+       specs:{peso:'396–453g',circunferencia:'68–70cm',paineis:'32 com relevo etrusco',material:'Couro sintético + foam PU',camara:'Borracha butílica',costura:'Costurada à mão',arte:'Relevo cabeça de leão etrusco'},
+       tags:['Arte etrusca','Relevo em baixo-relevo','Foam PU','Copa defensiva','Alemanha Reunificada','Schillaci artilheiro']},
+      {name:'Adidas Questra',yr:'1994',host:'EUA',svg:'questra',c:['#f0f0f0','#c03020','#1050a0'],
+       fact:'Superfície polyester espumosa revolucionária. Brasil pentacampeão. Roberto Baggio errou o pênalti decisivo',
+       history:'A Questra foi uma revolução na tecnologia das bolas: sua superfície de polietileno com camada de espuma de polyester criava uma sensação ao toque completamente nova e um voo mais estável e previsível. A Copa nos EUA foi marcante: a primeira nos Estados Unidos ajudou a popularizar o futebol no país. O Brasil conquistou o pentacampeonato inédito, mas o torneio ficou eternizado pela imagem de Roberto Baggio com a cabeça baixa após errar o pênalti decisivo na final que a Itália perdeu.',
+       specs:{peso:'396–453g',circunferencia:'68–70cm',paineis:'32',material:'Polietileno + espuma polyester',camara:'Borracha butílica',costura:'Costura máquina',inovacao:'Camada de espuma polyester'},
+       tags:['Espuma polyester','Brasil pentacampeão','Baggio pênalti perdido','Copa nos EUA','Romário artilheiro','Nova tecnologia surface']},
+      {name:'Adidas Tricolore',yr:'1998',host:'França',svg:'tricolore',c:['#0044aa','#dd0020','#f0f0f0'],
+       fact:'1ª Copa com bola em cores — não apenas branca. França campeã em casa. Ronaldo e o enigma da final',
+       history:'A Tricolore foi histórica: a primeira bola colorida de uma Copa do Mundo, abandonando definitivamente o branco puro. As cores azul, vermelho e branco homenageavam a bandeira francesa — a tricolore. Tecnicamente avançada com superfície sintética de alta performance, a bola foi protagonista de uma Copa memorável na França, que se sagrou campeã em casa pela primeira vez. A final, porém, ficou marcada pelo mistério de Ronaldo: o jogador sofreu convulsões na véspera e entrou mal na partida. O Brasil perdeu por 3×0.',
+       specs:{peso:'396–453g',circunferencia:'68–70cm',paineis:'32',material:'Polietileno sintético colorido',camara:'Borracha butílica',costura:'Máquina',inovacao:'Primeira bola colorida de Copa'},
+       tags:['Primeira bola colorida','Tricolore francesa','França campeã','Mistério do Ronaldo','Zidane 2 gols na final','1998 Saint-Denis']},
     ]
   },
   {
     id:'tecnologica', title:'Era Tecnológica', range:'2002 — 2014',
     balls:[
-      {name:'Adidas Fevernova',yr:'2002',host:'Japão / Coreia',svg:'fevernova',c:['#f5e050','#e03010','#f0f8f0'],fact:'Design asiático com espirais de fogo. Mais leve e veloz. Brasil pentacampeão com Ronaldo ressuscitado'},
-      {name:'Adidas Teamgeist',yr:'2006',host:'Alemanha',svg:'teamgeist',c:['#1a1a1a','#d4a020','#2a2a2a'],fact:'14 painéis thermobonded sem costuras. Zidane cabeçada em Materazzi. Itália tetracampeã nos pênaltis'},
-      {name:'Adidas Jabulani',yr:'2010',host:'África do Sul',svg:'jabulani',c:['#f0a020','#208040','#c01010'],fact:'8 painéis Grip\'n\'Groove. Trajetória errática criticada por goleiros. Vuvuzelas. Espanha campeã inédita'},
-      {name:'Adidas Brazuca',yr:'2014',host:'Brasil — 7×1',svg:'brazuca',c:['#208040','#e8c800','#1050a0'],fact:'6 painéis propeller interlocked. Copa do histórico 7×1 no Mineirão. Alemanha bicampeã. Neuer invicto'},
+      {name:'Adidas Fevernova',yr:'2002',host:'Japão / Coreia',svg:'fevernova',c:['#f5e050','#e03010','#f0f8f0'],
+       fact:'Design asiático com espirais de fogo. Mais leve e veloz. Brasil pentacampeão com Ronaldo ressuscitado',
+       history:'A Fevernova foi projetada com inspiração na cultura asiática, com espirais que evocam o fogo e a energia do Extremo Oriente. Tecnicamente, era mais leve e aerodinamicamente superior às predecessoras. Porém, os goleiros reclamaram de sua trajetória errática. A Copa 2002 foi histórica: primeira realizada na Ásia, com surpreendentes eliminações de Portugal, França e Argentina. Ronaldo, que havia sofrido convulsões na final de 1998, ressurgiu como herói absoluto com 8 gols, conquistando o pentacampeonato brasileiro.',
+       specs:{peso:'420g',circunferencia:'68–70cm',paineis:'32',material:'Poliuretano sintético',camara:'Látex natural',costura:'Termocollagem + costura',design:'Espirais asiáticas'},
+       tags:['Espirais de fogo','Design asiático','Ronaldo ressuscitado','Brasil pentacampeão','Primeira Copa na Ásia','Trajetória criticada']},
+      {name:'Adidas Teamgeist',yr:'2006',host:'Alemanha',svg:'teamgeist',c:['#1a1a1a','#d4a020','#2a2a2a'],
+       fact:'14 painéis thermobonded sem costuras. Zidane cabeçada em Materazzi. Itália tetracampeã nos pênaltis',
+       history:'A Teamgeist foi uma revolução: seus apenas 14 painéis unidos por termocollagem sem costuras tradicionais criavam uma superfície perfeitamente esférica e com trajetória muito mais previsível. Os jogadores amaram a precisão nos chutes de longa distância. A Copa na Alemanha produziu momentos inesquecíveis: Zidane, no ato final de sua carreira, deu uma cabeçada em Materazzi e foi expulso na final. A Itália venceu a França nos pênaltis e se sagrou tetracampeã. Kahn foi eleito melhor goleiro.',
+       specs:{peso:'440g',circunferencia:'68–70cm',paineis:'14 (termocollados)',material:'Polietileno sintético',camara:'Látex de alta pressão',costura:'Sem costura (thermobonded)',inovacao:'14 painéis sem costura'},
+       tags:['14 painéis','Thermobonded','Sem costura','Zidane cabeçada','Itália tetracampeã','Copa da Alemanha']},
+      {name:'Adidas Jabulani',yr:'2010',host:'África do Sul',svg:'jabulani',c:['#f0a020','#208040','#c01010'],
+       fact:'8 painéis Grip\'n\'Groove. Trajetória errática criticada por goleiros. Vuvuzelas. Espanha campeã inédita',
+       history:'O Jabulani ("celebrar" em zulu) foi talvez a bola mais controversa da história das Copas. Seus 8 painéis aerodinâmicos com a textura Grip\'n\'Groove criavam uma trajetória tão errática e imprevisível que goleiros de todo o mundo denunciaram publicamente. Iker Casillas chegou a comparar a bola a uma "bola de praia". Apesar de toda a polêmica, a Copa na África do Sul foi histórica e emocionante, marcada pelas onipresentes vuvuzelas. A Espanha conquistou seu primeiro título mundial com o único gol de Iniesta na prorrogação.',
+       specs:{peso:'440g',circunferencia:'68–70cm',paineis:'8 Grip\'n\'Groove',material:'Espuma EVA + PU sintético',camara:'Látex natural',costura:'Thermobonded',controversia:'Trajetória imprevisível'},
+       tags:['8 painéis','Jabulani','Grip\'n\'Groove','Controverso','Vuvuzelas','Espanha campeã inédita','Casillas crítico']},
+      {name:'Adidas Brazuca',yr:'2014',host:'Brasil — 7×1',svg:'brazuca',c:['#208040','#e8c800','#1050a0'],
+       fact:'6 painéis propeller interlocked. Copa do histórico 7×1 no Mineirão. Alemanha bicampeã. Neuer invicto',
+       history:'A Brazuca, nome escolhido por votação popular de 1,7 milhão de brasileiros, foi amplamente elogiada por jogadores e goleiros como a melhor bola de Copa da era moderna. Seus 6 painéis em forma de hélice (propeller) entrelaçados criavam uma superfície altamente simétrica e trajetória consistente. A Copa no Brasil ficou para sempre marcada pela goleada histórica de 7×1 da Alemanha sobre o Brasil, no Mineirão, em Belo Horizonte. A Alemanha sagrou-se tetracampeã, com Neuer eleito melhor goleiro.',
+       specs:{peso:'437g',circunferencia:'68–70cm',paineis:'6 propeller interlocked',material:'Poliuretano texturizado',camara:'Látex natural',costura:'Thermobonded',design:'6 painéis hélice'},
+       tags:['6 painéis hélice','Brazuca','Escolha popular','Melhor bola moderna','7×1 histórico','Alemanha tetracampeã','Neuer invicto']},
     ]
   },
   {
     id:'digital', title:'Era Digital', range:'2018 — 2026',
     balls:[
-      {name:'Adidas Telstar 18',yr:'2018',host:'Rússia',svg:'telstar18',c:['#c0c0c8','#282830','#e8e8f0'],fact:'Chip NFC integrado para interação mobile. Homenagem ao ícone de 1970. França campeã com Mbappé'},
-      {name:'Adidas Al Rihla',yr:'2022',host:'Qatar',svg:'alrihla',c:['#e02060','#0080c8','#f0f020'],fact:'Sensor IMU a 500Hz com dados em tempo real. A bola mais veloz da história. Argentina de Messi campeã'},
-      {name:'Adidas TRIONDA',yr:'2026',host:'EUA / CAN / MEX',svg:'trionda',c:['#60ff80','#00c0c0','#003020'],fact:'IA generativa de aerodinâmica. Polímero de carbono flexível. 1ª Copa do Mundo com 48 seleções'},
+      {name:'Adidas Telstar 18',yr:'2018',host:'Rússia',svg:'telstar18',c:['#c0c0c8','#282830','#e8e8f0'],
+       fact:'Chip NFC integrado para interação mobile. Homenagem ao ícone de 1970. França campeã com Mbappé',
+       history:'A Telstar 18 foi uma homenagem tecnológica ao ícone de 1970, com design pixelado que remete à era digital. Mas sua maior inovação foi o chip NFC (Near Field Communication) embutido em cada bola: ao aproximar o smartphone, o torcedor acessava conteúdo exclusivo, estatísticas e experiências digitais. A Copa na Rússia foi histórica: a França de Mbappé, com apenas 19 anos, venceu a Croácia por 4×2 numa final emocionante. Mbappé tornou-se o segundo jogador a marcar numa final, depois de Pelé em 1958.',
+       specs:{peso:'437g',circunferencia:'68–70cm',paineis:'6',material:'PU texturizado com pixel pattern',camara:'Látex natural',costura:'Thermobonded',tecnologia:'Chip NFC integrado'},
+       tags:['Chip NFC','Interação mobile','Homenagem Telstar 1970','França campeã','Mbappé 19 anos','Design pixelado']},
+      {name:'Adidas Al Rihla',yr:'2022',host:'Qatar',svg:'alrihla',c:['#e02060','#0080c8','#f0f020'],
+       fact:'Sensor IMU a 500Hz com dados em tempo real. A bola mais veloz da história. Argentina de Messi campeã',
+       history:'Al Rihla ("a jornada" em árabe) foi considerada a bola tecnicamente mais avançada já usada numa Copa, e a mais rápida da história do torneio — com velocidades registradas de até 130 km/h nos melhores chutes. Seu sensor IMU interno transmitia dados de posição e velocidade a 500 vezes por segundo, fundamental para o sistema semi-automatizado de impedimento da VAR. A Copa no Qatar foi a primeira no Oriente Médio. Argentina e Messi finalmente conquistaram o título tão aguardado numa final épica contra a França, nos pênaltis.',
+       specs:{peso:'440g',circunferencia:'68–70cm',paineis:'20',material:'PU sustentável (base água)',camara:'Câmara de butílica + sensor',costura:'Thermobonded',sensor:'IMU 500Hz + dados em tempo real',velocidade:'Até 130 km/h'},
+       tags:['Sensor IMU 500Hz','Mais veloz da história','VAR integrado','Al Rihla','Argentina campeã','Messi campeão','Copa no Qatar','PU sustentável']},
+      {name:'Adidas TRIONDA',yr:'2026',host:'EUA / CAN / MEX',svg:'trionda',c:['#60ff80','#00c0c0','#003020'],
+       fact:'IA generativa de aerodinâmica. Polímero de carbono flexível. 1ª Copa do Mundo com 48 seleções',
+       history:'A TRIONDA representa o ápice da tecnologia no design de bolas de futebol. Seu perfil aerodinâmico foi otimizado por inteligência artificial generativa que processou dados de milhões de chutes, encontrando a geometria ideal para estabilidade máxima em diferentes velocidades e condições climáticas. O polímero de carbono flexível de última geração garante leveza e responsividade sem precedentes. A Copa de 2026, com 48 seleções pela primeira vez, é disputada em três países: EUA, Canadá e México.',
+       specs:{peso:'410g',circunferencia:'68–70cm',paineis:'Geometria IA optimizada',material:'Polímero de carbono flexível',camara:'Câmara inteligente com sensores',costura:'Termofusão molecular',tecnologia:'IA generativa de aerodinâmica',sensor:'Chip 5G + acelerômetro'},
+       tags:['IA generativa','Polímero de carbono','48 seleções','Primeiro torneio tri-nações','Chip 5G','Tecnologia de ponta','Copa 2026']},
     ]
   }
 ];
- 
+
 const ERA_CFG = {
   classica:{ac:'#c07840',glow:'rgba(192,120,64,.12)'},
   revolucao:{ac:'#ddd8c8',glow:'rgba(220,216,200,.08)'},
@@ -294,50 +540,40 @@ const ERA_CFG = {
   tecnologica:{ac:'#48c8ff',glow:'rgba(72,200,255,.1)'},
   digital:{ac:'#4dff9a',glow:'rgba(77,255,154,.12)'},
 };
- 
+
 function mkSvg(type, c) {
   const [c1, c2, c3] = c;
   const id = 'g' + (Math.random()*1e9|0).toString(36);
- 
   const circle = (extra='', stroke=c2, sw=1.5) =>
     `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="${stroke}" stroke-width="${sw}"/>${extra}`;
- 
   const wrap = (defs, inner) =>
     `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${defs}${inner}</svg>`;
- 
   const rg = (x='38%',y='32%',s1=c3||c1,s2=c1,s3=c2) =>
     `<defs><radialGradient id="${id}" cx="${x}" cy="${y}" r="65%">
 <stop offset="0%" stop-color="${s1}"/>
 <stop offset="55%" stop-color="${s2}"/>
 <stop offset="100%" stop-color="${s3}"/>
 </radialGradient></defs>`;
- 
   switch(type) {
-    case 'leather': {
-      return wrap(rg(), circle(`
+    case 'leather': return wrap(rg(), circle(`
 <path d="M18 38 Q30 22 50 20 Q70 22 82 38" fill="none" stroke="${c2}" stroke-width="2.5" opacity=".68"/>
 <path d="M18 62 Q30 78 50 80 Q70 78 82 62" fill="none" stroke="${c2}" stroke-width="2.5" opacity=".68"/>
 <path d="M20 50 Q28 37 38 33 Q46 29 50 36 Q54 29 62 33 Q72 37 80 50" fill="none" stroke="${c2}" stroke-width="1.8" opacity=".48"/>
 <path d="M20 50 Q28 63 38 67 Q46 71 50 64 Q54 71 62 67 Q72 63 80 50" fill="none" stroke="${c2}" stroke-width="1.8" opacity=".48"/>
-      `));
-    }
-    case 'leather13': {
-      return wrap(rg(), circle(`
+    `));
+    case 'leather13': return wrap(rg(), circle(`
 <path d="M50 3 L50 97" fill="none" stroke="${c2}" stroke-width="2.5" opacity=".58"/>
 <path d="M14 26 L86 74" fill="none" stroke="${c2}" stroke-width="1.8" opacity=".38"/>
 <path d="M14 74 L86 26" fill="none" stroke="${c2}" stroke-width="1.8" opacity=".38"/>
 <path d="M9 50 L91 50" fill="none" stroke="${c2}" stroke-width="1.8" opacity=".38"/>
 <path d="M27 9 L73 91" fill="none" stroke="${c2}" stroke-width="1.2" opacity=".28"/>
 <path d="M27 91 L73 9" fill="none" stroke="${c2}" stroke-width="1.2" opacity=".28"/>
-      `));
-    }
-    case 'leatherDT': {
-      return wrap(rg(), circle(`
+    `));
+    case 'leatherDT': return wrap(rg(), circle(`
 <line x1="50" y1="5" x2="50" y2="95" stroke="${c2}" stroke-width="3" opacity=".58"/>
 <line x1="9" y1="50" x2="91" y2="50" stroke="${c2}" stroke-width="3" opacity=".58"/>
 <rect x="20" y="20" width="60" height="60" rx="30" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".22"/>
-      `));
-    }
+    `));
     case 'leatherStar': {
       let spokes = '';
       [0,60,120,180,240,300].forEach(a => {
@@ -346,94 +582,60 @@ function mkSvg(type, c) {
       });
       return wrap(rg(), circle(spokes));
     }
-    case 'slazenger': {
-      return wrap(rg(), circle(`
+    case 'slazenger': return wrap(rg(), circle(`
 <path d="M50 3 Q80 20 80 50 Q80 80 50 97 Q60 68 54 50 Q60 32 50 3Z" fill="rgba(255,255,255,.18)"/>
 <path d="M50 3 Q20 20 20 50 Q20 80 50 97 Q40 68 46 50 Q40 32 50 3Z" fill="rgba(255,200,150,.12)"/>
 <text x="50" y="56" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="11" font-family="serif" font-weight="bold">4★</text>
-      `));
-    }
+    `));
     case 'telstar': {
       const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
 <stop offset="0%" stop-color="#ffffff"/><stop offset="70%" stop-color="#e8e8e8"/><stop offset="100%" stop-color="#c0c0c0"/>
 </radialGradient></defs>`;
-      const pts = [
-        [50,14,58,20,55,30,45,30,42,20],[78,32,86,28,92,36,86,44,76,40],
-        [82,62,88,70,82,78,72,74,72,64],[58,84,50,90,42,84,44,74,56,74],
-        [22,64,12,70,8,60,16,52,26,56], [18,36,8,42,8,30,18,24,26,30],
-      ].map(p=>`<polygon points="${p.join(',')}" fill="#1a1a1a"/>`).join('');
+      const pts = [[50,14,58,20,55,30,45,30,42,20],[78,32,86,28,92,36,86,44,76,40],[82,62,88,70,82,78,72,74,72,64],[58,84,50,90,42,84,44,74,56,74],[22,64,12,70,8,60,16,52,26,56],[18,36,8,42,8,30,18,24,26,30]].map(p=>`<polygon points="${p.join(',')}" fill="#1a1a1a"/>`).join('');
       return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#ccc" stroke-width="1"/>${pts}`);
     }
     case 'chilelast': {
       const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
 <stop offset="0%" stop-color="#fff8e8"/><stop offset="60%" stop-color="${c1}"/><stop offset="100%" stop-color="#b89840"/>
 </radialGradient></defs>`;
-      const pts = [
-        [50,14,58,20,55,30,45,30,42,20],[78,32,86,28,92,36,86,44,76,40],
-        [82,62,88,70,82,78,72,74,72,64],[58,84,50,90,42,84,44,74,56,74],
-        [22,64,12,70,8,60,16,52,26,56], [18,36,8,42,8,30,18,24,26,30],
-      ].map(p=>`<polygon points="${p.join(',')}" fill="#907020" opacity=".75"/>`).join('');
+      const pts = [[50,14,58,20,55,30,45,30,42,20],[78,32,86,28,92,36,86,44,76,40],[82,62,88,70,82,78,72,74,72,64],[58,84,50,90,42,84,44,74,56,74],[22,64,12,70,8,60,16,52,26,56],[18,36,8,42,8,30,18,24,26,30]].map(p=>`<polygon points="${p.join(',')}" fill="#907020" opacity=".75"/>`).join('');
       return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#a08030" stroke-width="1.5"/>${pts}`);
     }
     case 'telstarDurlast': {
       const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
 <stop offset="0%" stop-color="#ffffff"/><stop offset="70%" stop-color="#e0e0e0"/><stop offset="100%" stop-color="#b8b8b8"/>
 </radialGradient></defs>`;
-      const pts = [
-        [50,14,58,20,55,30,45,30,42,20],[78,32,86,28,92,36,86,44,76,40],
-        [82,62,88,70,82,78,72,74,72,64],[58,84,50,90,42,84,44,74,56,74],
-        [22,64,12,70,8,60,16,52,26,56], [18,36,8,42,8,30,18,24,26,30],
-      ].map(p=>`<polygon points="${p.join(',')}" fill="#1a1a1a"/>`).join('');
+      const pts = [[50,14,58,20,55,30,45,30,42,20],[78,32,86,28,92,36,86,44,76,40],[82,62,88,70,82,78,72,74,72,64],[58,84,50,90,42,84,44,74,56,74],[22,64,12,70,8,60,16,52,26,56],[18,36,8,42,8,30,18,24,26,30]].map(p=>`<polygon points="${p.join(',')}" fill="#1a1a1a"/>`).join('');
       return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#bbb" stroke-width="1"/>${pts}`);
     }
     case 'tango': {
       const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
 <stop offset="0%" stop-color="#ffffff"/><stop offset="65%" stop-color="${c1}"/><stop offset="100%" stop-color="#d0c8b0"/>
 </radialGradient></defs>`;
-      let paths = '';
-      for(let i=0;i<20;i++){
-        const a=(i*18)*Math.PI/180, r=30;
-        const x=50+r*Math.cos(a), y=50+r*Math.sin(a);
-        paths+=`<path d="M50 50 L${(x-3).toFixed(1)} ${(y-3).toFixed(1)} Q${x.toFixed(1)} ${(y-9).toFixed(1)} ${(x+3).toFixed(1)} ${(y-3).toFixed(1)} Z" fill="${c2}" opacity=".68"/>`;
-      }
-      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#c0b880" stroke-width="1.5"/>
-        ${paths}<circle cx="50" cy="50" r="12" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".28"/>`);
+      let paths='';
+      for(let i=0;i<20;i++){const a=(i*18)*Math.PI/180,r=30,x=50+r*Math.cos(a),y=50+r*Math.sin(a);paths+=`<path d="M50 50 L${(x-3).toFixed(1)} ${(y-3).toFixed(1)} Q${x.toFixed(1)} ${(y-9).toFixed(1)} ${(x+3).toFixed(1)} ${(y-3).toFixed(1)} Z" fill="${c2}" opacity=".68"/>`;}
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#c0b880" stroke-width="1.5"/>${paths}<circle cx="50" cy="50" r="12" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".28"/>`);
     }
     case 'tangoespanha': {
       const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
 <stop offset="0%" stop-color="#ffe880"/><stop offset="55%" stop-color="${c1}"/><stop offset="100%" stop-color="#a07010"/>
 </radialGradient></defs>`;
-      let paths = '';
-      for(let i=0;i<20;i++){
-        const a=(i*18)*Math.PI/180, r=30;
-        const x=50+r*Math.cos(a), y=50+r*Math.sin(a);
-        paths+=`<path d="M50 50 L${(x-3).toFixed(1)} ${(y-3).toFixed(1)} Q${x.toFixed(1)} ${(y-9).toFixed(1)} ${(x+3).toFixed(1)} ${(y-3).toFixed(1)} Z" fill="${c2}" opacity=".62"/>`;
-      }
-      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#c09020" stroke-width="2"/>
-        ${paths}<circle cx="50" cy="50" r="12" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".35"/>`);
+      let paths='';
+      for(let i=0;i<20;i++){const a=(i*18)*Math.PI/180,r=30,x=50+r*Math.cos(a),y=50+r*Math.sin(a);paths+=`<path d="M50 50 L${(x-3).toFixed(1)} ${(y-3).toFixed(1)} Q${x.toFixed(1)} ${(y-9).toFixed(1)} ${(x+3).toFixed(1)} ${(y-3).toFixed(1)} Z" fill="${c2}" opacity=".62"/>`;}
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#c09020" stroke-width="2"/>${paths}<circle cx="50" cy="50" r="12" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".35"/>`);
     }
-    case 'azteca': {
-      return wrap(rg(), circle(`
+    case 'azteca': return wrap(rg(), circle(`
 <path d="M50 14 L58 22 L50 22 Z M50 86 L42 78 L50 78 Z M14 50 L22 42 L22 50 Z M86 50 L78 58 L78 50 Z" fill="rgba(255,255,255,.3)"/>
 <rect x="37" y="37" width="26" height="26" rx="2" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2"/>
 <rect x="28" y="28" width="44" height="44" rx="3" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1.5"/>
 <path d="M50 25 L62 37 M50 25 L38 37 M75 50 L63 62 M75 50 L63 38 M50 75 L38 63 M50 75 L62 63 M25 50 L37 38 M25 50 L37 62" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
-      `));
-    }
+    `));
     case 'etrusco': {
       const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
 <stop offset="0%" stop-color="#fff8e8"/><stop offset="60%" stop-color="${c1}"/><stop offset="100%" stop-color="#d0c090"/>
 </radialGradient></defs>`;
-      const dots = [30,90,150,210,270,330].map(a=>{
-        const r=a*Math.PI/180;
-        return `<circle cx="${(50+33*Math.cos(r)).toFixed(1)}" cy="${(50+33*Math.sin(r)).toFixed(1)}" r="3.5" fill="${c2}" opacity=".48"/>`;
-      }).join('');
-      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#b09030" stroke-width="1.5"/>
-<circle cx="50" cy="50" r="22" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".32"/>
-<path d="M42 38 Q50 28 58 38 Q64 48 50 54 Q36 48 42 38 Z" fill="${c2}" opacity=".28"/>
-<path d="M20 28 Q34 14 50 12 Q66 14 80 28" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".32" stroke-dasharray="3,2"/>
-<path d="M20 72 Q34 86 50 88 Q66 86 80 72" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".32" stroke-dasharray="3,2"/>
-        ${dots}`);
+      const dots=[30,90,150,210,270,330].map(a=>{const r=a*Math.PI/180;return `<circle cx="${(50+33*Math.cos(r)).toFixed(1)}" cy="${(50+33*Math.sin(r)).toFixed(1)}" r="3.5" fill="${c2}" opacity=".48"/>`;}).join('');
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#b09030" stroke-width="1.5"/><circle cx="50" cy="50" r="22" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".32"/><path d="M42 38 Q50 28 58 38 Q64 48 50 54 Q36 48 42 38 Z" fill="${c2}" opacity=".28"/><path d="M20 28 Q34 14 50 12 Q66 14 80 28" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".32" stroke-dasharray="3,2"/><path d="M20 72 Q34 86 50 88 Q66 86 80 72" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".32" stroke-dasharray="3,2"/>${dots}`);
     }
     case 'questra': {
       const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
@@ -445,12 +647,9 @@ function mkSvg(type, c) {
 <path d="M78 18 Q62 32 50 50 Q38 68 22 82" fill="none" stroke="${c3}" stroke-width="7" stroke-linecap="round" opacity=".38"/>`);
     }
     case 'tricolore': {
-      const d = `<defs>
-<radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+      const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
 <stop offset="0%" stop-color="#c8d8ff"/><stop offset="55%" stop-color="${c1}"/><stop offset="100%" stop-color="#001868"/>
-</radialGradient>
-<clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath>
-</defs>`;
+</radialGradient><clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath></defs>`;
       return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#001888" stroke-width="1"/>
 <path d="M50 3 Q80 20 80 50 Q80 80 50 97 Q58 68 54 50 Q58 32 50 3Z" fill="${c2}" opacity=".48" clip-path="url(#cp${id})"/>
 <path d="M50 3 Q20 20 20 50 Q20 80 50 97 Q42 68 46 50 Q42 32 50 3Z" fill="rgba(255,255,255,.48)" clip-path="url(#cp${id})"/>`);
@@ -465,12 +664,9 @@ function mkSvg(type, c) {
 <path d="M40 24 Q56 18 66 30 Q78 46 70 62 Q60 74 44 70 Q28 62 30 46 Q32 30 40 24Z" fill="rgba(224,60,0,.2)"/>`);
     }
     case 'teamgeist': {
-      const d = `<defs>
-<radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+      const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
 <stop offset="0%" stop-color="#383838"/><stop offset="60%" stop-color="${c1}"/><stop offset="100%" stop-color="#050505"/>
-</radialGradient>
-<clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath>
-</defs>`;
+</radialGradient><clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath></defs>`;
       return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#3a3a3a" stroke-width="1"/>
 <path d="M50 8 Q78 18 82 50 Q78 82 50 92 Q60 65 56 50Z" fill="${c2}" opacity=".48" clip-path="url(#cp${id})"/>
 <path d="M92 50 Q82 78 50 82 Q18 78 8 50 Q36 60 50 56Z" fill="${c2}" opacity=".35" clip-path="url(#cp${id})"/>
@@ -478,33 +674,21 @@ function mkSvg(type, c) {
 <circle cx="50" cy="50" r="47" fill="none" stroke="rgba(212,160,32,.14)" stroke-width="1"/>`);
     }
     case 'jabulani': {
-      const d = `<defs>
-<radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+      const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
 <stop offset="0%" stop-color="#f8c040"/><stop offset="55%" stop-color="${c1}"/><stop offset="100%" stop-color="#c07000"/>
-</radialGradient>
-<clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath>
-</defs>`;
-      const colors8 = [c1,c3,'#208040',c3,c1,c3,'#208040',c3];
+</radialGradient><clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath></defs>`;
+      const colors8=[c1,c3,'#208040',c3,c1,c3,'#208040',c3];
       let panels='';
-      for(let i=0;i<8;i++){
-        const a=(i*45)*Math.PI/180, a1=((i*45)+35)*Math.PI/180, a2=((i*45)+40)*Math.PI/180;
-        panels+=`<path d="M${(50+20*Math.cos(a)).toFixed(1)} ${(50+20*Math.sin(a)).toFixed(1)} Q${(50+44*Math.cos(a1)).toFixed(1)} ${(50+44*Math.sin(a1)).toFixed(1)} ${(50+20*Math.cos(a2)).toFixed(1)} ${(50+20*Math.sin(a2)).toFixed(1)} Z" fill="${colors8[i]}" opacity=".58" clip-path="url(#cp${id})"/>`;
-      }
+      for(let i=0;i<8;i++){const a=(i*45)*Math.PI/180,a1=((i*45)+35)*Math.PI/180,a2=((i*45)+40)*Math.PI/180;panels+=`<path d="M${(50+20*Math.cos(a)).toFixed(1)} ${(50+20*Math.sin(a)).toFixed(1)} Q${(50+44*Math.cos(a1)).toFixed(1)} ${(50+44*Math.sin(a1)).toFixed(1)} ${(50+20*Math.cos(a2)).toFixed(1)} ${(50+20*Math.sin(a2)).toFixed(1)} Z" fill="${colors8[i]}" opacity=".58" clip-path="url(#cp${id})"/>`;}
       return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#a06000" stroke-width="1"/>${panels}`);
     }
     case 'brazuca': {
-      const d = `<defs>
-<radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+      const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
 <stop offset="0%" stop-color="#60d890"/><stop offset="55%" stop-color="${c1}"/><stop offset="100%" stop-color="#004818"/>
-</radialGradient>
-<clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath>
-</defs>`;
+</radialGradient><clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath></defs>`;
       const bc=['#208040','#e8c800','#1050a0','#f0f0f0','#2080e0','#e04020'];
       let panels='';
-      for(let i=0;i<6;i++){
-        const a=(i*60)*Math.PI/180, a1=(i*60+30)*Math.PI/180, a2=(i*60+60)*Math.PI/180;
-        panels+=`<path d="M${(50+16*Math.cos(a)).toFixed(1)} ${(50+16*Math.sin(a)).toFixed(1)} Q${(50+44*Math.cos(a1)).toFixed(1)} ${(50+44*Math.sin(a1)).toFixed(1)} ${(50+16*Math.cos(a2)).toFixed(1)} ${(50+16*Math.sin(a2)).toFixed(1)} Z" fill="${bc[i]}" opacity=".7" clip-path="url(#cp${id})"/>`;
-      }
+      for(let i=0;i<6;i++){const a=(i*60)*Math.PI/180,a1=(i*60+30)*Math.PI/180,a2=(i*60+60)*Math.PI/180;panels+=`<path d="M${(50+16*Math.cos(a)).toFixed(1)} ${(50+16*Math.sin(a)).toFixed(1)} Q${(50+44*Math.cos(a1)).toFixed(1)} ${(50+44*Math.sin(a1)).toFixed(1)} ${(50+16*Math.cos(a2)).toFixed(1)} ${(50+16*Math.sin(a2)).toFixed(1)} Z" fill="${bc[i]}" opacity=".7" clip-path="url(#cp${id})"/>`;}
       return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#004818" stroke-width="1.5"/>${panels}`);
     }
     case 'telstar18': {
@@ -512,20 +696,13 @@ function mkSvg(type, c) {
 <stop offset="0%" stop-color="#e8e8f0"/><stop offset="60%" stop-color="${c1}"/><stop offset="100%" stop-color="#505060"/>
 </radialGradient></defs>`;
       let pixels='';
-      for(let row=0;row<8;row++) for(let col=0;col<8;col++){
-        const x=21+col*8, y=21+row*8;
-        if(Math.sqrt((x-50)**2+(y-50)**2)<41 && (row+col)%3===0)
-          pixels+=`<rect x="${x}" y="${y}" width="7" height="7" rx="1" fill="${c2}" opacity=".38"/>`;
-      }
+      for(let row=0;row<8;row++)for(let col=0;col<8;col++){const x=21+col*8,y=21+row*8;if(Math.sqrt((x-50)**2+(y-50)**2)<41&&(row+col)%3===0)pixels+=`<rect x="${x}" y="${y}" width="7" height="7" rx="1" fill="${c2}" opacity=".38"/>`;}
       return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#7070a0" stroke-width="1"/>${pixels}`);
     }
     case 'alrihla': {
-      const d = `<defs>
-<radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+      const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
 <stop offset="0%" stop-color="#ff90b8"/><stop offset="55%" stop-color="${c1}"/><stop offset="100%" stop-color="#600010"/>
-</radialGradient>
-<clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath>
-</defs>`;
+</radialGradient><clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath></defs>`;
       return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#800030" stroke-width="1"/>
 <path d="M50 4 L82 28 L82 72 L50 96 L18 72 L18 28Z" fill="none" stroke="${c2}" stroke-width="2.5" opacity=".52" clip-path="url(#cp${id})"/>
 <path d="M50 18 L74 36 L74 64 L50 82 L26 64 L26 36Z" fill="${c2}" opacity=".22" clip-path="url(#cp${id})"/>
@@ -533,16 +710,9 @@ function mkSvg(type, c) {
 <circle cx="50" cy="50" r="8" fill="rgba(255,255,255,.22)"/>`);
     }
     case 'trionda': {
-      const d = `<defs>
-<radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+      const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
 <stop offset="0%" stop-color="#c0fff0"/><stop offset="55%" stop-color="${c1}"/><stop offset="100%" stop-color="${c3}"/>
-</radialGradient>
-<filter id="gf${id}" x="-50%" y="-50%" width="200%" height="200%">
-<feGaussianBlur stdDeviation="2.5" result="blur"/>
-<feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-</filter>
-<clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath>
-</defs>`;
+</radialGradient><filter id="gf${id}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter><clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath></defs>`;
       return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#00c060" stroke-width="1.5"/>
 <path d="M8 50 Q24 20 50 34 Q76 48 92 28 Q78 60 50 66 Q22 72 8 50Z" fill="${c2}" opacity=".32" clip-path="url(#cp${id})"/>
 <path d="M8 62 Q28 30 50 46 Q72 62 92 42 Q82 78 50 80 Q18 78 8 62Z" fill="${c2}" opacity=".18" clip-path="url(#cp${id})"/>
@@ -553,74 +723,99 @@ function mkSvg(type, c) {
     default: return mkSvg('leather', c);
   }
 }
- 
+
 function isAdidas(name) { return name.toLowerCase().includes('adidas'); }
- 
-/* Build timeline */
+
 function buildTimeline() {
   const tl = document.getElementById('tl');
   const allBalls = ERAS.flatMap(e=>e.balls);
   allBalls.forEach((b,i)=>{
     const era = ERAS.find(e=>e.balls.includes(b));
     const ec = ERA_CFG[era.id];
-    if(i>0) {
-      const line = document.createElement('div');
-      line.className='tl-line';
-      tl.appendChild(line);
-    }
-    const node = document.createElement('a');
-    node.className='tl-node';
-    node.href=`#era-${era.id}`;
-    node.innerHTML=`
-<div class="tl-dot" style="background:${ec.ac}"></div>
-<div class="tl-yr">${b.yr}</div>
-    `;
+    if(i>0){const line=document.createElement('div');line.className='tl-line';tl.appendChild(line);}
+    const node=document.createElement('a');node.className='tl-node';node.href=`#era-${era.id}`;
+    node.innerHTML=`<div class="tl-dot" style="background:${ec.ac}"></div><div class="tl-yr">${b.yr}</div>`;
     tl.appendChild(node);
   });
 }
- 
-/* Render cards */
-function getBallImg(b) {
-  const yr = b.name === 'Modelo T' ? '1930' : b.yr;
-  let cleanName = b.name.toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\s-]/g, '')
-    .trim()
-    .replace(/\s+/g, '-');
-  return `img/${cleanName}-${yr}.png`;
+
+let currentBall = null;
+const overlay = document.getElementById('modalOverlay');
+const modalClose = document.getElementById('modalClose');
+
+function openModal(ball, era) {
+  currentBall = ball;
+  const ec = ERA_CFG[era.id];
+  const ballEl = document.getElementById('modalBall');
+  const svgStr = mkSvg(ball.svg, ball.c);
+  const imgPath = `img/${ball.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-')}-${ball.yr==='—'?'1930':ball.yr}.png`;
+  ballEl.innerHTML = `<img src="${imgPath}" alt="${ball.name}" onerror="this.onerror=null;this.outerHTML=${JSON.stringify(svgStr)}">`;
+  document.getElementById('modalTitle').textContent = ball.name;
+  document.getElementById('modalTitle').style.color = ec.ac;
+  document.getElementById('modalYr').textContent = ball.yr === '—' ? 'Protótipo' : `Copa do Mundo · ${ball.yr}`;
+  document.getElementById('modalHost').textContent = `📍 ${ball.host}`;
+  document.getElementById('modalHistory').textContent = ball.history || ball.fact;
+  const specsEl = document.getElementById('modalSpecs');
+  specsEl.innerHTML = '';
+  const specLabels = {
+    peso:'Peso',circunferencia:'Circunferência',paineis:'Painéis',
+    material:'Material',camara:'Câmara',costura:'Costura',
+    inovacao:'Inovação',design:'Design',arte:'Arte',
+    novidade:'Novidade',versao:'Versão',sensor:'Sensor',
+    velocidade:'Velocidade',tecnologia:'Tecnologia',
+    controversia:'Controvérsia',origem:'Origem',cor:'Cor'
+  };
+  Object.entries(ball.specs || {}).forEach(([k,v])=>{
+    const label = specLabels[k] || k;
+    specsEl.innerHTML += `
+      <div class="spec-item">
+        <div class="spec-label">${label}</div>
+        <div class="spec-val" style="font-size:${v.length>12?'1rem':'1.3rem'}">${v.split(' ')[0]}</div>
+        <div class="spec-unit">${v.split(' ').slice(1).join(' ')}</div>
+      </div>`;
+  });
+  const tagsEl = document.getElementById('modalTags');
+  tagsEl.innerHTML = '';
+  (ball.tags || []).forEach((t,i) => {
+    tagsEl.innerHTML += `<span class="modal-tag${i<2?' gold':''}">${t}</span>`;
+  });
+  document.getElementById('modal').style.borderColor = ec.ac + '33';
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
+
+function closeModal() {
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+modalClose.addEventListener('click', closeModal);
+overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
 
 function render() {
   const catalog = document.getElementById('catalog');
   ERAS.forEach(era=>{
     const ec = ERA_CFG[era.id];
     const section = document.createElement('section');
-    section.className=`era era-${era.id}`;
-    section.id=`era-${era.id}`;
-    section.dataset.era=era.id;
+    section.className=`era era-${era.id}`;section.id=`era-${era.id}`;section.dataset.era=era.id;
     const cards = era.balls.map((b,idx)=>{
-      const imgPath = getBallImg(b);
+      const imgPath = `img/${b.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-')}-${b.yr==='—'?'1930':b.yr}.png`;
       const svgStr = mkSvg(b.svg, b.c);
-      const safeSvgStr = svgStr.replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, '');
+      const safeSvg = svgStr.replace(/'/g,"\\'").replace(/"/g,'&quot;').replace(/\n/g,'');
       return `
-<div class="card" data-era="${era.id}" style="transition-delay:${idx*55}ms">
+<div class="card" data-era="${era.id}" data-ball="${era.id}_${idx}" style="transition-delay:${idx*55}ms">
 <div class="card-vis">
 <div class="card-glow" style="background:radial-gradient(ellipse 90% 70% at 50% 65%,${ec.glow},transparent)"></div>
-          <img src="${imgPath}" alt="${b.name}" onerror="this.onerror=null; this.outerHTML='${safeSvgStr}'">
+<img src="${imgPath}" alt="${b.name}" onerror="this.onerror=null;this.outerHTML='${safeSvg}'">
 </div>
 <div class="card-info">
-<div class="yr-row">
-<span class="yr">${b.yr}</span>
-<span class="host">${b.host}</span>
-</div>
+<div class="yr-row"><span class="yr">${b.yr}</span><span class="host">${b.host}</span></div>
 <div class="cname">${b.name}</div>
-<span class="badge ${isAdidas(b.name)?'b-adi':'b-pre'}">
-            ${isAdidas(b.name)?'◆ Adidas':'○ Pré-Adidas'}
-</span>
+<span class="badge ${isAdidas(b.name)?'b-adi':'b-pre'}">${isAdidas(b.name)?'◆ Adidas':'○ Pré-Adidas'}</span>
 <p class="fact">${b.fact}</p>
 </div>
-</div>
-      `;
+</div>`;
     }).join('');
     section.innerHTML=`
 <div class="era-hd">
@@ -628,37 +823,40 @@ function render() {
 <span class="era-range">${era.range}</span>
 <span class="era-count">${era.balls.length} bola${era.balls.length>1?'s':''}</span>
 </div>
-<div class="grid">${cards}</div>
-    `;
+<div class="grid">${cards}</div>`;
     catalog.appendChild(section);
   });
- 
-  /* Intersection observer — staggered card entrance */
+
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => {
+      const [eraId, idxStr] = card.dataset.ball.split('_');
+      const era = ERAS.find(e => e.id === eraId);
+      const ball = era.balls[parseInt(idxStr)];
+      openModal(ball, era);
+    });
+  });
+
   const obs = new IntersectionObserver(entries=>{
     entries.forEach(e=>{
       if(e.isIntersecting){
-        e.target.querySelectorAll('.card').forEach((c,i)=>
-          setTimeout(()=>c.classList.add('vis'), i*55));
+        e.target.querySelectorAll('.card').forEach((c,i)=>setTimeout(()=>c.classList.add('vis'),i*55));
         obs.unobserve(e.target);
       }
     });
   },{threshold:0.04});
   document.querySelectorAll('.era').forEach(s=>obs.observe(s));
 }
- 
-/* Filter buttons */
+
 document.querySelectorAll('.fb').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
-    const f = btn.dataset.f;
-    document.querySelectorAll('.era').forEach(s=>{
-      s.style.display=(f==='all'||s.dataset.era===f)?'':'none';
-    });
+    const f=btn.dataset.f;
+    document.querySelectorAll('.era').forEach(s=>{s.style.display=(f==='all'||s.dataset.era===f)?'':'none';});
     window.scrollTo({top:document.querySelector('.filters').offsetTop-60,behavior:'smooth'});
   });
 });
- 
+
 buildTimeline();
 render();
 </script>
