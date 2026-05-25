@@ -150,12 +150,13 @@ nav{
   position:relative;height:170px;display:flex;
   align-items:center;justify-content:center;overflow:hidden;
 }
-.card-vis svg{
+.card-vis svg, .card-vis img{
   width:118px;height:118px;
+  object-fit: contain;
   filter:drop-shadow(0 10px 28px rgba(0,0,0,.65));
   transition:transform .5s cubic-bezier(.34,1.56,.64,1),filter .3s;
 }
-.card:hover .card-vis svg{transform:scale(1.14) rotate(14deg);filter:drop-shadow(0 18px 40px rgba(0,0,0,.75))}
+.card:hover .card-vis svg, .card:hover .card-vis img{transform:scale(1.14) rotate(14deg);filter:drop-shadow(0 18px 40px rgba(0,0,0,.75))}
 .card-glow{position:absolute;inset:0;opacity:0;transition:opacity .4s;pointer-events:none}
 .card:hover .card-glow{opacity:1}
 .card-info{padding:1.1rem;border-top:1px solid var(--brd)}
@@ -201,7 +202,7 @@ footer{
 <section class="hero">
 <div class="hero-bg"></div>
 <div class="hero-dot">Arquivo Histórico Completo</div>
-<h1>A <span class="acc">EVOLUÇÃO</span><br>DA ESFERA</h1>
+<h1>A <span class="acc">EVOLUÇÃO</span><br>DAS BOLAS</h1>
 <p class="hero-sub">Todas as bolas oficiais das Copas do Mundo FIFA — do couro artesanal de 1930 à tecnologia digital de 2026.</p>
 <div class="hero-stats">
 <div><div class="stat-n">25</div><div class="stat-l">Bolas Oficiais</div></div>
@@ -579,6 +580,16 @@ function buildTimeline() {
 }
  
 /* Render cards */
+function getBallImg(b) {
+  const yr = b.name === 'Modelo T' ? '1930' : b.yr;
+  let cleanName = b.name.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+  return `img/${cleanName}-${yr}.png`;
+}
+
 function render() {
   const catalog = document.getElementById('catalog');
   ERAS.forEach(era=>{
@@ -587,11 +598,15 @@ function render() {
     section.className=`era era-${era.id}`;
     section.id=`era-${era.id}`;
     section.dataset.era=era.id;
-    const cards = era.balls.map((b,idx)=>`
+    const cards = era.balls.map((b,idx)=>{
+      const imgPath = getBallImg(b);
+      const svgStr = mkSvg(b.svg, b.c);
+      const safeSvgStr = svgStr.replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, '');
+      return `
 <div class="card" data-era="${era.id}" style="transition-delay:${idx*55}ms">
 <div class="card-vis">
 <div class="card-glow" style="background:radial-gradient(ellipse 90% 70% at 50% 65%,${ec.glow},transparent)"></div>
-          ${mkSvg(b.svg, b.c)}
+          <img src="${imgPath}" alt="${b.name}" onerror="this.onerror=null; this.outerHTML='${safeSvgStr}'">
 </div>
 <div class="card-info">
 <div class="yr-row">
@@ -605,7 +620,8 @@ function render() {
 <p class="fact">${b.fact}</p>
 </div>
 </div>
-    `).join('');
+      `;
+    }).join('');
     section.innerHTML=`
 <div class="era-hd">
 <h2 class="era-title">${era.title}</h2>
