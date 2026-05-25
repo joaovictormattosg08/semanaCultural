@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORBITA | Todas as Bolas da Copa do Mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;700;900&display=swap%22 rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0b0b;
+  --s1: #141414;
+  --s2: #1e1e1e;
+  --s3: #282828;
+  --brd: rgba(255,255,255,0.07);
+  --gold: #e8b830;
+  --gold-l: #f7d060;
+  --text: #e6e2dc;
+  --muted: #887f74;
+  --dim: #48433e;
+  --r: 12px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;overflow-x:hidden}
+ 
+/* NAV */
+nav{
+  position:fixed;top:0;width:100%;z-index:100;
+  background:rgba(11,11,11,0.92);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--brd);
+  height:60px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(1rem,5vw,4rem);
+}
+.nav-logo{font-family:'Bebas Neue';font-size:26px;letter-spacing:.1em;color:var(--gold);text-decoration:none}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:'Space Mono';font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+@media(max-width:768px){.nav-links{display:none}}
+ 
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:80px 2rem 5rem;
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%,rgba(232,184,48,.07) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 40% at 85% 85%,rgba(72,200,255,.04) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 30% at 10% 70%,rgba(77,255,154,.03) 0%,transparent 50%);
+}
+.hero-dot{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 16px;
+  background:rgba(232,184,48,.08);border:1px solid rgba(232,184,48,.2);
+  border-radius:100px;font-family:'Space Mono';font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;
+}
+.hero-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.6)}}
+.hero h1{
+  font-family:'Bebas Neue';font-size:clamp(3.5rem,13vw,11rem);line-height:.9;
+  letter-spacing:.02em;margin-bottom:1.5rem;
+}
+.hero h1 .acc{color:var(--gold)}
+.hero-sub{
+  font-size:clamp(.95rem,2vw,1.15rem);color:var(--muted);
+  max-width:520px;margin:0 auto 3.5rem;line-height:1.7;
+}
+.hero-stats{display:flex;gap:clamp(2rem,5vw,5rem);flex-wrap:wrap;justify-content:center}
+.stat-n{font-family:'Bebas Neue';font-size:clamp(2.5rem,5vw,4rem);color:var(--gold);line-height:1}
+.stat-l{font-family:'Space Mono';font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+ 
+/* TIMELINE BAR */
+.timeline-bar{
+  padding:1.5rem clamp(1rem,5vw,4rem);
+  background:var(--s1);border-bottom:1px solid var(--brd);
+  overflow:hidden;
+}
+.tl-inner{display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none;padding:1rem 0}
+.tl-inner::-webkit-scrollbar{display:none}
+.tl-line{flex:1;height:1px;background:var(--brd);min-width:20px}
+.tl-node{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;flex-shrink:0;
+}
+.tl-dot{
+  width:10px;height:10px;border-radius:50%;border:2px solid var(--bg);
+  transition:transform .3s;
+}
+.tl-node:hover .tl-dot{transform:scale(1.7)}
+.tl-yr{font-family:'Space Mono';font-size:9px;letter-spacing:.08em;color:var(--dim);white-space:nowrap}
+.tl-node:hover .tl-yr{color:var(--gold)}
+ 
+/* FILTERS */
+.filters{
+  position:sticky;top:60px;z-index:90;
+  background:rgba(11,11,11,.96);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--brd);
+  padding:.8rem clamp(1rem,5vw,4rem);
+}
+.filters-inner{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.filters-inner::-webkit-scrollbar{display:none}
+.fb{
+  flex-shrink:0;background:transparent;border:1px solid var(--brd);
+  border-radius:100px;padding:6px 14px;
+  font-family:'Space Mono';font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap;
+}
+.fb:hover{border-color:var(--gold);color:var(--gold)}
+.fb.active{background:var(--gold);border-color:var(--gold);color:#0b0b0b;font-weight:700}
+ 
+/* MAIN */
+.main{padding:3rem clamp(1rem,5vw,4rem);max-width:1600px;margin:0 auto}
+ 
+/* ERA */
+.era{margin-bottom:5rem}
+.era-hd{
+  display:flex;align-items:baseline;gap:1.5rem;margin-bottom:2rem;
+  padding-bottom:1rem;border-bottom:1px solid var(--brd);flex-wrap:wrap;
+}
+.era-title{font-family:'Bebas Neue';font-size:2rem;letter-spacing:.05em}
+.era-range{font-family:'Space Mono';font-size:11px;color:var(--dim)}
+.era-count{margin-left:auto;font-family:'Space Mono';font-size:11px;color:var(--muted)}
+.era-classica .era-title{color:#c07840}
+.era-revolucao .era-title{color:#ddd8c8}
+.era-sintetica .era-title{color:#50a8e0}
+.era-tecnologica .era-title{color:#48c8ff}
+.era-digital .era-title{color:#4dff9a}
+ 
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr);gap:.65rem}}
+ 
+/* CARD */
+.card{
+  background:var(--s1);border:1px solid var(--brd);border-radius:var(--r);
+  overflow:hidden;cursor:pointer;
+  opacity:0;transform:translateY(16px);
+  transition:opacity .5s ease,transform .5s ease,border-color .3s,box-shadow .3s;
+}
+.card.vis{opacity:1;transform:translateY(0)}
+.card:hover{
+  transform:translateY(-6px) scale(1.01);
+  border-color:rgba(232,184,48,.28);
+  box-shadow:0 18px 50px rgba(0,0,0,.55),0 0 0 1px rgba(232,184,48,.08);
+}
+.card-vis{
+  position:relative;height:170px;display:flex;
+  align-items:center;justify-content:center;overflow:hidden;
+}
+.card-vis svg{
+  width:118px;height:118px;
+  filter:drop-shadow(0 10px 28px rgba(0,0,0,.65));
+  transition:transform .5s cubic-bezier(.34,1.56,.64,1),filter .3s;
+}
+.card:hover .card-vis svg{transform:scale(1.14) rotate(14deg);filter:drop-shadow(0 18px 40px rgba(0,0,0,.75))}
+.card-glow{position:absolute;inset:0;opacity:0;transition:opacity .4s;pointer-events:none}
+.card:hover .card-glow{opacity:1}
+.card-info{padding:1.1rem;border-top:1px solid var(--brd)}
+.yr-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem}
+.yr{font-family:'Space Mono';font-size:11px;letter-spacing:.08em;color:var(--muted)}
+.host{font-family:'Space Mono';font-size:9px;color:var(--dim);text-align:right;max-width:120px;line-height:1.4}
+.cname{
+  font-family:'Bebas Neue';font-size:1.35rem;letter-spacing:.04em;line-height:1.05;
+  margin-bottom:.45rem;color:var(--text);transition:color .2s;
+}
+.card:hover .cname{color:var(--gold)}
+.badge{
+  display:inline-flex;align-items:center;gap:4px;
+  font-family:'Space Mono';font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 8px;border-radius:4px;margin-bottom:.65rem;
+}
+.b-pre{background:rgba(192,120,64,.1);color:#c07840;border:1px solid rgba(192,120,64,.18)}
+.b-adi{background:rgba(232,184,48,.08);color:var(--gold);border:1px solid rgba(232,184,48,.14)}
+.fact{font-size:12px;color:var(--muted);line-height:1.58}
+ 
+/* FOOTER */
+footer{
+  border-top:1px solid var(--brd);padding:2.5rem clamp(1rem,5vw,4rem);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+}
+.f-logo{font-family:'Bebas Neue';font-size:2.5rem;letter-spacing:.1em;color:rgba(232,184,48,.12)}
+.f-copy{font-family:'Space Mono';font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
+</style>
+</head>
+<body>
+ 
+<nav>
+<a class="nav-logo" href="#">ORBITA</a>
+<ul class="nav-links">
+<li><a href="#era-classica">Clássica</a></li>
+<li><a href="#era-revolucao">Revolução</a></li>
+<li><a href="#era-sintetica">Sintética</a></li>
+<li><a href="#era-tecnologica">Tecnológica</a></li>
+<li><a href="#era-digital">Digital</a></li>
+</ul>
+</nav>
+ 
+<section class="hero">
+<div class="hero-bg"></div>
+<div class="hero-dot">Arquivo Histórico Completo</div>
+<h1>A <span class="acc">EVOLUÇÃO</span><br>DA ESFERA</h1>
+<p class="hero-sub">Todas as bolas oficiais das Copas do Mundo FIFA — do couro artesanal de 1930 à tecnologia digital de 2026.</p>
+<div class="hero-stats">
+<div><div class="stat-n">25</div><div class="stat-l">Bolas Oficiais</div></div>
+<div><div class="stat-n">24</div><div class="stat-l">Edições da Copa</div></div>
+<div><div class="stat-n">96</div><div class="stat-l">Anos de História</div></div>
+</div>
+</section>
+ 
+<div class="timeline-bar">
+<div class="tl-inner" id="tl"></div>
+</div>
+ 
+<div class="filters">
+<div class="filters-inner">
+<button class="fb active" data-f="all">Todas (25)</button>
+<button class="fb" data-f="classica">Era Clássica · 1930–66 (9)</button>
+<button class="fb" data-f="revolucao">Revolução Adidas · 70–82 (5)</button>
+<button class="fb" data-f="sintetica">Era Sintética · 86–98 (4)</button>
+<button class="fb" data-f="tecnologica">Era Tecnológica · 02–14 (4)</button>
+<button class="fb" data-f="digital">Era Digital · 18–26 (3)</button>
+</div>
+</div>
+ 
+<main class="main" id="catalog"></main>
+ 
+<footer>
+<div class="f-logo">ORBITA</div>
+<div class="f-copy">© 2024 ORBITA Digital Archive · Todas as Bolas Oficiais das Copas do Mundo FIFA</div>
+</footer>
+ 
+<script>
+const ERAS = [
+  {
+    id:'classica', title:'Era Clássica', range:'1930 — 1966',
+    balls:[
+      {name:'Modelo T',yr:'—',host:'Protótipo',svg:'leather',c:['#8b4a1a','#5a2a08','#c07030'],fact:'Padrão original de couro costurado artesanalmente. Definiu o design das bolas por décadas'},
+      {name:'Tiento',yr:'1930',host:'Uruguai',svg:'leather',c:['#7a3810','#4a2008','#b06020'],fact:'Bola argentina usada no 1º tempo da final histórica. Uruguai vence o 1º Mundial da FIFA'},
+      {name:'Federale 102',yr:'1934',host:'Itália',svg:'leather13',c:['#9a6820','#6a3810','#c08030'],fact:'13 tiras de couro costuradas à mão. Itália bicampeã em casa sob o regime de Mussolini'},
+      {name:'Allen',yr:'1938',host:'França',svg:'leather',c:['#704018','#3a1808','#a05828'],fact:'Câmara de borracha interna aprimorada. Última Copa antes da 2ª Grande Guerra Mundial'},
+      {name:'Superball Duplo T',yr:'1950',host:'Brasil',svg:'leatherDT',c:['#8a5020','#522a0a','#b87030'],fact:'Painel em duplo T. O Maracanazo: Uruguai 2×1 Brasil. A bola chegava a +500g molhada'},
+      {name:'Swiss World Champion',yr:'1954',host:'Suíça',svg:'leather',c:['#a07848','#6a4820','#c89858'],fact:'"Milagre de Berna": Alemanha surpreende a Hungria invicta. Design suíço preciso e robusto'},
+      {name:'Top Star',yr:'1958',host:'Suécia',svg:'leatherStar',c:['#905820','#5a3010','#c07830'],fact:'Copa da estreia lendária de Pelé aos 17 anos. Brasil bicampeão com placar épico de 5×2'},
+      {name:'Crack',yr:'1962',host:'Chile',svg:'leather',c:['#7a4010','#4a2008','#a06020'],fact:'Couro macio e refinado. Garrincha domina o torneio. Brasil se consagra tricampeão mundial'},
+      {name:'Slazenger Challenge 4-Star',yr:'1966',host:'Inglaterra',svg:'slazenger',c:['#d85820','#a03010','#f07040'],fact:'Laranja para os gramados ingleses. Eusébio marca 9 gols. Controvérsia do gol de Hurst na final'},
+    ]
+  },
+  {
+    id:'revolucao', title:'A Revolução Adidas', range:'1970 — 1982',
+    balls:[
+      {name:'Adidas Telstar',yr:'1970',host:'México',svg:'telstar',c:['#f0f0f0','#1a1a1a','#ffffff'],fact:'O ícone absoluto. 32 painéis preto e branco projetados para aparecer na TV colorida. Pelé bicampeão'},
+      {name:'Adidas Chile Durlast',yr:'1974',host:'Alemanha Ocid.',svg:'chilelast',c:['#e8e0d4','#a08840','#ffffff'],fact:'1ª Copa 100% Adidas com borracha Durlast. Cruyff e o Futebol Total holandês mudam o jogo'},
+      {name:'Adidas Telstar Durlast',yr:'1978',host:'Argentina',svg:'telstarDurlast',c:['#f0f0f0','#1a1a1a','#e0e0e0'],fact:'Argentina campeã em casa entre serpentinas douradas. Mario Kempes: herói absoluto do torneio'},
+      {name:'Adidas Tango Durlast',yr:'1982',host:'Espanha',svg:'tango',c:['#f5f0e8','#1a1a1a','#c0b898'],fact:'20 triângulos curvos no icônico padrão Tango. Brasil de Zico eliminado pelos italianos de Paolo Rossi'},
+      {name:'Adidas Tango España',yr:'1982',host:'Espanha',svg:'tangoespanha',c:['#f0e070','#c03010','#d4a020'],fact:'Versão espanhola especial com acabamento dourado. Itália tricampeã. Rossi artilheiro com 6 gols'},
+    ]
+  },
+  {
+    id:'sintetica', title:'Era Sintética', range:'1986 — 1998',
+    balls:[
+      {name:'Adidas Azteca',yr:'1986',host:'México',svg:'azteca',c:['#e06030','#c04010','#f08050'],fact:'1ª bola 100% sintética de uma Copa. Maradona imortalizou a Mão de Deus E o Gol do Século no mesmo jogo'},
+      {name:'Adidas Etrusco Unico',yr:'1990',host:'Itália',svg:'etrusco',c:['#f0e8d0','#c09020','#1a1a1a'],fact:'Arte etrusca italiana em relevo nos painéis. Copa mais defensiva da história. Alemanha Reunificada campeã'},
+      {name:'Adidas Questra',yr:'1994',host:'EUA',svg:'questra',c:['#f0f0f0','#c03020','#1050a0'],fact:'Superfície polyester espumosa revolucionária. Brasil pentacampeão. Roberto Baggio errou o pênalti decisivo'},
+      {name:'Adidas Tricolore',yr:'1998',host:'França',svg:'tricolore',c:['#0044aa','#dd0020','#f0f0f0'],fact:'1ª Copa com bola em cores — não apenas branca. França campeã em casa. Ronaldo e o enigma da final'},
+    ]
+  },
+  {
+    id:'tecnologica', title:'Era Tecnológica', range:'2002 — 2014',
+    balls:[
+      {name:'Adidas Fevernova',yr:'2002',host:'Japão / Coreia',svg:'fevernova',c:['#f5e050','#e03010','#f0f8f0'],fact:'Design asiático com espirais de fogo. Mais leve e veloz. Brasil pentacampeão com Ronaldo ressuscitado'},
+      {name:'Adidas Teamgeist',yr:'2006',host:'Alemanha',svg:'teamgeist',c:['#1a1a1a','#d4a020','#2a2a2a'],fact:'14 painéis thermobonded sem costuras. Zidane cabeçada em Materazzi. Itália tetracampeã nos pênaltis'},
+      {name:'Adidas Jabulani',yr:'2010',host:'África do Sul',svg:'jabulani',c:['#f0a020','#208040','#c01010'],fact:'8 painéis Grip\'n\'Groove. Trajetória errática criticada por goleiros. Vuvuzelas. Espanha campeã inédita'},
+      {name:'Adidas Brazuca',yr:'2014',host:'Brasil — 7×1',svg:'brazuca',c:['#208040','#e8c800','#1050a0'],fact:'6 painéis propeller interlocked. Copa do histórico 7×1 no Mineirão. Alemanha bicampeã. Neuer invicto'},
+    ]
+  },
+  {
+    id:'digital', title:'Era Digital', range:'2018 — 2026',
+    balls:[
+      {name:'Adidas Telstar 18',yr:'2018',host:'Rússia',svg:'telstar18',c:['#c0c0c8','#282830','#e8e8f0'],fact:'Chip NFC integrado para interação mobile. Homenagem ao ícone de 1970. França campeã com Mbappé'},
+      {name:'Adidas Al Rihla',yr:'2022',host:'Qatar',svg:'alrihla',c:['#e02060','#0080c8','#f0f020'],fact:'Sensor IMU a 500Hz com dados em tempo real. A bola mais veloz da história. Argentina de Messi campeã'},
+      {name:'Adidas TRIONDA',yr:'2026',host:'EUA / CAN / MEX',svg:'trionda',c:['#60ff80','#00c0c0','#003020'],fact:'IA generativa de aerodinâmica. Polímero de carbono flexível. 1ª Copa do Mundo com 48 seleções'},
+    ]
+  }
+];
+ 
+const ERA_CFG = {
+  classica:{ac:'#c07840',glow:'rgba(192,120,64,.12)'},
+  revolucao:{ac:'#ddd8c8',glow:'rgba(220,216,200,.08)'},
+  sintetica:{ac:'#50a8e0',glow:'rgba(80,168,224,.1)'},
+  tecnologica:{ac:'#48c8ff',glow:'rgba(72,200,255,.1)'},
+  digital:{ac:'#4dff9a',glow:'rgba(77,255,154,.12)'},
+};
+ 
+function mkSvg(type, c) {
+  const [c1, c2, c3] = c;
+  const id = 'g' + (Math.random()*1e9|0).toString(36);
+ 
+  const circle = (extra='', stroke=c2, sw=1.5) =>
+    `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="${stroke}" stroke-width="${sw}"/>${extra}`;
+ 
+  const wrap = (defs, inner) =>
+    `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${defs}${inner}</svg>`;
+ 
+  const rg = (x='38%',y='32%',s1=c3||c1,s2=c1,s3=c2) =>
+    `<defs><radialGradient id="${id}" cx="${x}" cy="${y}" r="65%">
+<stop offset="0%" stop-color="${s1}"/>
+<stop offset="55%" stop-color="${s2}"/>
+<stop offset="100%" stop-color="${s3}"/>
+</radialGradient></defs>`;
+ 
+  switch(type) {
+    case 'leather': {
+      return wrap(rg(), circle(`
+<path d="M18 38 Q30 22 50 20 Q70 22 82 38" fill="none" stroke="${c2}" stroke-width="2.5" opacity=".68"/>
+<path d="M18 62 Q30 78 50 80 Q70 78 82 62" fill="none" stroke="${c2}" stroke-width="2.5" opacity=".68"/>
+<path d="M20 50 Q28 37 38 33 Q46 29 50 36 Q54 29 62 33 Q72 37 80 50" fill="none" stroke="${c2}" stroke-width="1.8" opacity=".48"/>
+<path d="M20 50 Q28 63 38 67 Q46 71 50 64 Q54 71 62 67 Q72 63 80 50" fill="none" stroke="${c2}" stroke-width="1.8" opacity=".48"/>
+      `));
+    }
+    case 'leather13': {
+      return wrap(rg(), circle(`
+<path d="M50 3 L50 97" fill="none" stroke="${c2}" stroke-width="2.5" opacity=".58"/>
+<path d="M14 26 L86 74" fill="none" stroke="${c2}" stroke-width="1.8" opacity=".38"/>
+<path d="M14 74 L86 26" fill="none" stroke="${c2}" stroke-width="1.8" opacity=".38"/>
+<path d="M9 50 L91 50" fill="none" stroke="${c2}" stroke-width="1.8" opacity=".38"/>
+<path d="M27 9 L73 91" fill="none" stroke="${c2}" stroke-width="1.2" opacity=".28"/>
+<path d="M27 91 L73 9" fill="none" stroke="${c2}" stroke-width="1.2" opacity=".28"/>
+      `));
+    }
+    case 'leatherDT': {
+      return wrap(rg(), circle(`
+<line x1="50" y1="5" x2="50" y2="95" stroke="${c2}" stroke-width="3" opacity=".58"/>
+<line x1="9" y1="50" x2="91" y2="50" stroke="${c2}" stroke-width="3" opacity=".58"/>
+<rect x="20" y="20" width="60" height="60" rx="30" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".22"/>
+      `));
+    }
+    case 'leatherStar': {
+      let spokes = '';
+      [0,60,120,180,240,300].forEach(a => {
+        const r = a*Math.PI/180;
+        spokes += `<line x1="50" y1="50" x2="${(50+44*Math.cos(r)).toFixed(1)}" y2="${(50+44*Math.sin(r)).toFixed(1)}" stroke="${c2}" stroke-width="2" opacity=".42"/>`;
+      });
+      return wrap(rg(), circle(spokes));
+    }
+    case 'slazenger': {
+      return wrap(rg(), circle(`
+<path d="M50 3 Q80 20 80 50 Q80 80 50 97 Q60 68 54 50 Q60 32 50 3Z" fill="rgba(255,255,255,.18)"/>
+<path d="M50 3 Q20 20 20 50 Q20 80 50 97 Q40 68 46 50 Q40 32 50 3Z" fill="rgba(255,200,150,.12)"/>
+<text x="50" y="56" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="11" font-family="serif" font-weight="bold">4★</text>
+      `));
+    }
+    case 'telstar': {
+      const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+<stop offset="0%" stop-color="#ffffff"/><stop offset="70%" stop-color="#e8e8e8"/><stop offset="100%" stop-color="#c0c0c0"/>
+</radialGradient></defs>`;
+      const pts = [
+        [50,14,58,20,55,30,45,30,42,20],[78,32,86,28,92,36,86,44,76,40],
+        [82,62,88,70,82,78,72,74,72,64],[58,84,50,90,42,84,44,74,56,74],
+        [22,64,12,70,8,60,16,52,26,56], [18,36,8,42,8,30,18,24,26,30],
+      ].map(p=>`<polygon points="${p.join(',')}" fill="#1a1a1a"/>`).join('');
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#ccc" stroke-width="1"/>${pts}`);
+    }
+    case 'chilelast': {
+      const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+<stop offset="0%" stop-color="#fff8e8"/><stop offset="60%" stop-color="${c1}"/><stop offset="100%" stop-color="#b89840"/>
+</radialGradient></defs>`;
+      const pts = [
+        [50,14,58,20,55,30,45,30,42,20],[78,32,86,28,92,36,86,44,76,40],
+        [82,62,88,70,82,78,72,74,72,64],[58,84,50,90,42,84,44,74,56,74],
+        [22,64,12,70,8,60,16,52,26,56], [18,36,8,42,8,30,18,24,26,30],
+      ].map(p=>`<polygon points="${p.join(',')}" fill="#907020" opacity=".75"/>`).join('');
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#a08030" stroke-width="1.5"/>${pts}`);
+    }
+    case 'telstarDurlast': {
+      const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+<stop offset="0%" stop-color="#ffffff"/><stop offset="70%" stop-color="#e0e0e0"/><stop offset="100%" stop-color="#b8b8b8"/>
+</radialGradient></defs>`;
+      const pts = [
+        [50,14,58,20,55,30,45,30,42,20],[78,32,86,28,92,36,86,44,76,40],
+        [82,62,88,70,82,78,72,74,72,64],[58,84,50,90,42,84,44,74,56,74],
+        [22,64,12,70,8,60,16,52,26,56], [18,36,8,42,8,30,18,24,26,30],
+      ].map(p=>`<polygon points="${p.join(',')}" fill="#1a1a1a"/>`).join('');
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#bbb" stroke-width="1"/>${pts}`);
+    }
+    case 'tango': {
+      const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+<stop offset="0%" stop-color="#ffffff"/><stop offset="65%" stop-color="${c1}"/><stop offset="100%" stop-color="#d0c8b0"/>
+</radialGradient></defs>`;
+      let paths = '';
+      for(let i=0;i<20;i++){
+        const a=(i*18)*Math.PI/180, r=30;
+        const x=50+r*Math.cos(a), y=50+r*Math.sin(a);
+        paths+=`<path d="M50 50 L${(x-3).toFixed(1)} ${(y-3).toFixed(1)} Q${x.toFixed(1)} ${(y-9).toFixed(1)} ${(x+3).toFixed(1)} ${(y-3).toFixed(1)} Z" fill="${c2}" opacity=".68"/>`;
+      }
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#c0b880" stroke-width="1.5"/>
+        ${paths}<circle cx="50" cy="50" r="12" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".28"/>`);
+    }
+    case 'tangoespanha': {
+      const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+<stop offset="0%" stop-color="#ffe880"/><stop offset="55%" stop-color="${c1}"/><stop offset="100%" stop-color="#a07010"/>
+</radialGradient></defs>`;
+      let paths = '';
+      for(let i=0;i<20;i++){
+        const a=(i*18)*Math.PI/180, r=30;
+        const x=50+r*Math.cos(a), y=50+r*Math.sin(a);
+        paths+=`<path d="M50 50 L${(x-3).toFixed(1)} ${(y-3).toFixed(1)} Q${x.toFixed(1)} ${(y-9).toFixed(1)} ${(x+3).toFixed(1)} ${(y-3).toFixed(1)} Z" fill="${c2}" opacity=".62"/>`;
+      }
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#c09020" stroke-width="2"/>
+        ${paths}<circle cx="50" cy="50" r="12" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".35"/>`);
+    }
+    case 'azteca': {
+      return wrap(rg(), circle(`
+<path d="M50 14 L58 22 L50 22 Z M50 86 L42 78 L50 78 Z M14 50 L22 42 L22 50 Z M86 50 L78 58 L78 50 Z" fill="rgba(255,255,255,.3)"/>
+<rect x="37" y="37" width="26" height="26" rx="2" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2"/>
+<rect x="28" y="28" width="44" height="44" rx="3" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1.5"/>
+<path d="M50 25 L62 37 M50 25 L38 37 M75 50 L63 62 M75 50 L63 38 M50 75 L38 63 M50 75 L62 63 M25 50 L37 38 M25 50 L37 62" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
+      `));
+    }
+    case 'etrusco': {
+      const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+<stop offset="0%" stop-color="#fff8e8"/><stop offset="60%" stop-color="${c1}"/><stop offset="100%" stop-color="#d0c090"/>
+</radialGradient></defs>`;
+      const dots = [30,90,150,210,270,330].map(a=>{
+        const r=a*Math.PI/180;
+        return `<circle cx="${(50+33*Math.cos(r)).toFixed(1)}" cy="${(50+33*Math.sin(r)).toFixed(1)}" r="3.5" fill="${c2}" opacity=".48"/>`;
+      }).join('');
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#b09030" stroke-width="1.5"/>
+<circle cx="50" cy="50" r="22" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".32"/>
+<path d="M42 38 Q50 28 58 38 Q64 48 50 54 Q36 48 42 38 Z" fill="${c2}" opacity=".28"/>
+<path d="M20 28 Q34 14 50 12 Q66 14 80 28" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".32" stroke-dasharray="3,2"/>
+<path d="M20 72 Q34 86 50 88 Q66 86 80 72" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".32" stroke-dasharray="3,2"/>
+        ${dots}`);
+    }
+    case 'questra': {
+      const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+<stop offset="0%" stop-color="#ffffff"/><stop offset="60%" stop-color="#f0f0f0"/><stop offset="100%" stop-color="#c8c8c8"/>
+</radialGradient></defs>`;
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#bbb" stroke-width="1"/>
+<path d="M22 18 Q38 32 50 50 Q62 68 78 82" fill="none" stroke="${c2}" stroke-width="8" stroke-linecap="round" opacity=".65"/>
+<path d="M26 14 Q42 28 52 46 Q62 64 76 78" fill="none" stroke="${c3}" stroke-width="5" stroke-linecap="round" opacity=".48"/>
+<path d="M78 18 Q62 32 50 50 Q38 68 22 82" fill="none" stroke="${c3}" stroke-width="7" stroke-linecap="round" opacity=".38"/>`);
+    }
+    case 'tricolore': {
+      const d = `<defs>
+<radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+<stop offset="0%" stop-color="#c8d8ff"/><stop offset="55%" stop-color="${c1}"/><stop offset="100%" stop-color="#001868"/>
+</radialGradient>
+<clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath>
+</defs>`;
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#001888" stroke-width="1"/>
+<path d="M50 3 Q80 20 80 50 Q80 80 50 97 Q58 68 54 50 Q58 32 50 3Z" fill="${c2}" opacity=".48" clip-path="url(#cp${id})"/>
+<path d="M50 3 Q20 20 20 50 Q20 80 50 97 Q42 68 46 50 Q42 32 50 3Z" fill="rgba(255,255,255,.48)" clip-path="url(#cp${id})"/>`);
+    }
+    case 'fevernova': {
+      const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+<stop offset="0%" stop-color="#fffff0"/><stop offset="50%" stop-color="${c1}"/><stop offset="100%" stop-color="#b09000"/>
+</radialGradient></defs>`;
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#a08000" stroke-width="1"/>
+<path d="M50 8 Q72 18 78 40 Q84 62 68 76 Q50 92 32 76 Q16 62 22 40 Q28 18 50 8Z" fill="none" stroke="${c2}" stroke-width="2.5" opacity=".62"/>
+<path d="M50 20 Q66 30 69 50 Q69 70 50 76 Q31 70 31 50 Q31 30 50 20Z" fill="none" stroke="${c2}" stroke-width="1.5" opacity=".42"/>
+<path d="M40 24 Q56 18 66 30 Q78 46 70 62 Q60 74 44 70 Q28 62 30 46 Q32 30 40 24Z" fill="rgba(224,60,0,.2)"/>`);
+    }
+    case 'teamgeist': {
+      const d = `<defs>
+<radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+<stop offset="0%" stop-color="#383838"/><stop offset="60%" stop-color="${c1}"/><stop offset="100%" stop-color="#050505"/>
+</radialGradient>
+<clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath>
+</defs>`;
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#3a3a3a" stroke-width="1"/>
+<path d="M50 8 Q78 18 82 50 Q78 82 50 92 Q60 65 56 50Z" fill="${c2}" opacity=".48" clip-path="url(#cp${id})"/>
+<path d="M92 50 Q82 78 50 82 Q18 78 8 50 Q36 60 50 56Z" fill="${c2}" opacity=".35" clip-path="url(#cp${id})"/>
+<path d="M50 92 Q22 82 18 50 Q22 18 50 8 Q40 35 44 50Z" fill="${c2}" opacity=".28" clip-path="url(#cp${id})"/>
+<circle cx="50" cy="50" r="47" fill="none" stroke="rgba(212,160,32,.14)" stroke-width="1"/>`);
+    }
+    case 'jabulani': {
+      const d = `<defs>
+<radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+<stop offset="0%" stop-color="#f8c040"/><stop offset="55%" stop-color="${c1}"/><stop offset="100%" stop-color="#c07000"/>
+</radialGradient>
+<clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath>
+</defs>`;
+      const colors8 = [c1,c3,'#208040',c3,c1,c3,'#208040',c3];
+      let panels='';
+      for(let i=0;i<8;i++){
+        const a=(i*45)*Math.PI/180, a1=((i*45)+35)*Math.PI/180, a2=((i*45)+40)*Math.PI/180;
+        panels+=`<path d="M${(50+20*Math.cos(a)).toFixed(1)} ${(50+20*Math.sin(a)).toFixed(1)} Q${(50+44*Math.cos(a1)).toFixed(1)} ${(50+44*Math.sin(a1)).toFixed(1)} ${(50+20*Math.cos(a2)).toFixed(1)} ${(50+20*Math.sin(a2)).toFixed(1)} Z" fill="${colors8[i]}" opacity=".58" clip-path="url(#cp${id})"/>`;
+      }
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#a06000" stroke-width="1"/>${panels}`);
+    }
+    case 'brazuca': {
+      const d = `<defs>
+<radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+<stop offset="0%" stop-color="#60d890"/><stop offset="55%" stop-color="${c1}"/><stop offset="100%" stop-color="#004818"/>
+</radialGradient>
+<clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath>
+</defs>`;
+      const bc=['#208040','#e8c800','#1050a0','#f0f0f0','#2080e0','#e04020'];
+      let panels='';
+      for(let i=0;i<6;i++){
+        const a=(i*60)*Math.PI/180, a1=(i*60+30)*Math.PI/180, a2=(i*60+60)*Math.PI/180;
+        panels+=`<path d="M${(50+16*Math.cos(a)).toFixed(1)} ${(50+16*Math.sin(a)).toFixed(1)} Q${(50+44*Math.cos(a1)).toFixed(1)} ${(50+44*Math.sin(a1)).toFixed(1)} ${(50+16*Math.cos(a2)).toFixed(1)} ${(50+16*Math.sin(a2)).toFixed(1)} Z" fill="${bc[i]}" opacity=".7" clip-path="url(#cp${id})"/>`;
+      }
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#004818" stroke-width="1.5"/>${panels}`);
+    }
+    case 'telstar18': {
+      const d = `<defs><radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+<stop offset="0%" stop-color="#e8e8f0"/><stop offset="60%" stop-color="${c1}"/><stop offset="100%" stop-color="#505060"/>
+</radialGradient></defs>`;
+      let pixels='';
+      for(let row=0;row<8;row++) for(let col=0;col<8;col++){
+        const x=21+col*8, y=21+row*8;
+        if(Math.sqrt((x-50)**2+(y-50)**2)<41 && (row+col)%3===0)
+          pixels+=`<rect x="${x}" y="${y}" width="7" height="7" rx="1" fill="${c2}" opacity=".38"/>`;
+      }
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#7070a0" stroke-width="1"/>${pixels}`);
+    }
+    case 'alrihla': {
+      const d = `<defs>
+<radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+<stop offset="0%" stop-color="#ff90b8"/><stop offset="55%" stop-color="${c1}"/><stop offset="100%" stop-color="#600010"/>
+</radialGradient>
+<clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath>
+</defs>`;
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#800030" stroke-width="1"/>
+<path d="M50 4 L82 28 L82 72 L50 96 L18 72 L18 28Z" fill="none" stroke="${c2}" stroke-width="2.5" opacity=".52" clip-path="url(#cp${id})"/>
+<path d="M50 18 L74 36 L74 64 L50 82 L26 64 L26 36Z" fill="${c2}" opacity=".22" clip-path="url(#cp${id})"/>
+<path d="M50 33 L63 42 L63 58 L50 67 L37 58 L37 42Z" fill="${c3}" opacity=".42" clip-path="url(#cp${id})"/>
+<circle cx="50" cy="50" r="8" fill="rgba(255,255,255,.22)"/>`);
+    }
+    case 'trionda': {
+      const d = `<defs>
+<radialGradient id="${id}" cx="38%" cy="32%" r="65%">
+<stop offset="0%" stop-color="#c0fff0"/><stop offset="55%" stop-color="${c1}"/><stop offset="100%" stop-color="${c3}"/>
+</radialGradient>
+<filter id="gf${id}" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur stdDeviation="2.5" result="blur"/>
+<feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<clipPath id="cp${id}"><circle cx="50" cy="50" r="47"/></clipPath>
+</defs>`;
+      return wrap(d, `<circle cx="50" cy="50" r="47" fill="url(#${id})" stroke="#00c060" stroke-width="1.5"/>
+<path d="M8 50 Q24 20 50 34 Q76 48 92 28 Q78 60 50 66 Q22 72 8 50Z" fill="${c2}" opacity=".32" clip-path="url(#cp${id})"/>
+<path d="M8 62 Q28 30 50 46 Q72 62 92 42 Q82 78 50 80 Q18 78 8 62Z" fill="${c2}" opacity=".18" clip-path="url(#cp${id})"/>
+<path d="M28 50 Q38 35 50 50 Q62 65 72 50" fill="none" stroke="${c1}" stroke-width="3" filter="url(#gf${id})" opacity=".95"/>
+<path d="M18 38 Q33 23 50 38 Q67 53 82 38" fill="none" stroke="${c2}" stroke-width="2" filter="url(#gf${id})" opacity=".72"/>
+<circle cx="50" cy="50" r="47" fill="none" stroke="rgba(96,255,128,.22)" stroke-width="1.5"/>`);
+    }
+    default: return mkSvg('leather', c);
+  }
+}
+ 
+function isAdidas(name) { return name.toLowerCase().includes('adidas'); }
+ 
+/* Build timeline */
+function buildTimeline() {
+  const tl = document.getElementById('tl');
+  const allBalls = ERAS.flatMap(e=>e.balls);
+  allBalls.forEach((b,i)=>{
+    const era = ERAS.find(e=>e.balls.includes(b));
+    const ec = ERA_CFG[era.id];
+    if(i>0) {
+      const line = document.createElement('div');
+      line.className='tl-line';
+      tl.appendChild(line);
+    }
+    const node = document.createElement('a');
+    node.className='tl-node';
+    node.href=`#era-${era.id}`;
+    node.innerHTML=`
+<div class="tl-dot" style="background:${ec.ac}"></div>
+<div class="tl-yr">${b.yr}</div>
+    `;
+    tl.appendChild(node);
+  });
+}
+ 
+/* Render cards */
+function render() {
+  const catalog = document.getElementById('catalog');
+  ERAS.forEach(era=>{
+    const ec = ERA_CFG[era.id];
+    const section = document.createElement('section');
+    section.className=`era era-${era.id}`;
+    section.id=`era-${era.id}`;
+    section.dataset.era=era.id;
+    const cards = era.balls.map((b,idx)=>`
+<div class="card" data-era="${era.id}" style="transition-delay:${idx*55}ms">
+<div class="card-vis">
+<div class="card-glow" style="background:radial-gradient(ellipse 90% 70% at 50% 65%,${ec.glow},transparent)"></div>
+          ${mkSvg(b.svg, b.c)}
+</div>
+<div class="card-info">
+<div class="yr-row">
+<span class="yr">${b.yr}</span>
+<span class="host">${b.host}</span>
+</div>
+<div class="cname">${b.name}</div>
+<span class="badge ${isAdidas(b.name)?'b-adi':'b-pre'}">
+            ${isAdidas(b.name)?'◆ Adidas':'○ Pré-Adidas'}
+</span>
+<p class="fact">${b.fact}</p>
+</div>
+</div>
+    `).join('');
+    section.innerHTML=`
+<div class="era-hd">
+<h2 class="era-title">${era.title}</h2>
+<span class="era-range">${era.range}</span>
+<span class="era-count">${era.balls.length} bola${era.balls.length>1?'s':''}</span>
+</div>
+<div class="grid">${cards}</div>
+    `;
+    catalog.appendChild(section);
+  });
+ 
+  /* Intersection observer — staggered card entrance */
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.card').forEach((c,i)=>
+          setTimeout(()=>c.classList.add('vis'), i*55));
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.04});
+  document.querySelectorAll('.era').forEach(s=>obs.observe(s));
+}
+ 
+/* Filter buttons */
+document.querySelectorAll('.fb').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.f;
+    document.querySelectorAll('.era').forEach(s=>{
+      s.style.display=(f==='all'||s.dataset.era===f)?'':'none';
+    });
+    window.scrollTo({top:document.querySelector('.filters').offsetTop-60,behavior:'smooth'});
+  });
+});
+ 
+buildTimeline();
+render();
+</script>
+</body>
+</html>
